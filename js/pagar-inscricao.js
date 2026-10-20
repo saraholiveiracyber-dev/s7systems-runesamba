@@ -1,8 +1,8 @@
+
 /* =========================================================
    RUN & SAMBA 2026
-   PAGAR INSCRIÇÃO
-   CPF + SUPABASE
-   PAGAMENTO EXTERNO PELA IZY
+   CONSULTA DE INSCRIÇÃO E PAGAMENTO
+   CPF + SUPABASE + IZY
 ========================================================= */
 
 const SUPABASE_URL =
@@ -11,10 +11,6 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_Yt-DyfGqRqfbPN6aPgLM5w_K2RIneDd";
 
-/*
-   LINK FIXO DO PAGAMENTO
-   Não é salvo nem consultado no Supabase.
-*/
 const IZY_PAYMENT_URL =
     "https://eventos.izypass.com.br/share/run-and-samba-2-edicao_luziania_20-11-2026";
 
@@ -43,40 +39,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const mensagem = document.getElementById("mensagem");
     const resultado = document.getElementById("resultado");
 
-    const resultadoNome =
-        document.getElementById("resultadoNome");
+    const resultadoNome = document.getElementById("resultadoNome");
+    const resultadoCPF = document.getElementById("resultadoCPF");
+    const resultadoPercurso = document.getElementById("resultadoPercurso");
+    const resultadoCamiseta = document.getElementById("resultadoCamiseta");
+    const resultadoValor = document.getElementById("resultadoValor");
+    const resultadoStatus = document.getElementById("resultadoStatus");
 
-    const resultadoCPF =
-        document.getElementById("resultadoCPF");
-
-    const resultadoPercurso =
-        document.getElementById("resultadoPercurso");
-
-    const resultadoCamiseta =
-        document.getElementById("resultadoCamiseta");
-
-    const resultadoValor =
-        document.getElementById("resultadoValor");
-
-    const resultadoStatus =
-        document.getElementById("resultadoStatus");
-
-    const btnPagamento =
-        document.getElementById("btnPagamento");
-
-    const statusPagamento =
-        document.getElementById("statusPagamento");
+    const btnPagamento = document.getElementById("btnPagamento");
+    const statusPagamento = document.getElementById("statusPagamento");
 
 
     /* =====================================================
-       VERIFICAÇÃO DOS ELEMENTOS
+       VERIFICAR ELEMENTOS
     ===================================================== */
 
     if (!form || !cpf) {
         console.error(
             "Formulário ou campo CPF não encontrado."
         );
-
         return;
     }
 
@@ -86,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function limparCPF(valor) {
-
         return String(valor || "")
             .replace(/\D/g, "")
             .substring(0, 11);
@@ -102,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (numero.length <= 6) {
-
             return numero.replace(
                 /^(\d{3})(\d{1,3})$/,
                 "$1.$2"
@@ -110,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (numero.length <= 9) {
-
             return numero.replace(
                 /^(\d{3})(\d{3})(\d{1,3})$/,
                 "$1.$2.$3"
@@ -125,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       VALIDAÇÃO CPF
+       VALIDAR CPF
     ===================================================== */
 
     function cpfValido(valor) {
@@ -136,59 +114,33 @@ document.addEventListener("DOMContentLoaded", () => {
             return false;
         }
 
-        /*
-           Impede CPFs como:
-           111.111.111-11
-           222.222.222-22
-           etc.
-        */
-
         if (/^(\d)\1{10}$/.test(numero)) {
             return false;
         }
 
-
-        /* Primeiro dígito */
-
         let soma = 0;
 
         for (let i = 0; i < 9; i++) {
-
-            soma +=
-                Number(numero[i]) *
-                (10 - i);
+            soma += Number(numero[i]) * (10 - i);
         }
 
         let resto = soma % 11;
 
-        const digito1 =
-            resto < 2
-                ? 0
-                : 11 - resto;
+        const digito1 = resto < 2 ? 0 : 11 - resto;
 
         if (digito1 !== Number(numero[9])) {
             return false;
         }
 
-
-        /* Segundo dígito */
-
         soma = 0;
 
         for (let i = 0; i < 10; i++) {
-
-            soma +=
-                Number(numero[i]) *
-                (11 - i);
+            soma += Number(numero[i]) * (11 - i);
         }
 
         resto = soma % 11;
 
-        const digito2 =
-            resto < 2
-                ? 0
-                : 11 - resto;
-
+        const digito2 = resto < 2 ? 0 : 11 - resto;
 
         return digito2 === Number(numero[10]);
     }
@@ -198,23 +150,15 @@ document.addEventListener("DOMContentLoaded", () => {
        MENSAGENS
     ===================================================== */
 
-    function mostrarMensagem(
-        texto,
-        tipo = "erro"
-    ) {
+    function mostrarMensagem(texto, tipo = "erro") {
 
         if (!mensagem) {
-
             alert(texto);
-
             return;
         }
 
         mensagem.textContent = texto;
-
-        mensagem.className =
-            "mensagem " + tipo;
-
+        mensagem.className = "mensagem " + tipo;
         mensagem.style.display = "block";
     }
 
@@ -226,10 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         mensagem.textContent = "";
-
-        mensagem.className =
-            "mensagem";
-
+        mensagem.className = "mensagem";
         mensagem.style.display = "none";
     }
 
@@ -250,72 +191,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FORMATAÇÃO DO VALOR
-       
-       Como não vamos consultar valor no Supabase,
-       usamos o valor fixo da inscrição.
+       NORMALIZAR STATUS
     ===================================================== */
 
-    function formatarValor() {
+    function normalizarStatus(valor) {
 
-        return "R$ 89,90";
+        return String(valor || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim()
+            .toUpperCase()
+            .replace(/[\s-]+/g, "_");
     }
 
 
     /* =====================================================
-       CONSULTAR CPF NO SUPABASE
-       
-       IMPORTANTE:
-       SOMENTE CONSULTAMOS A EXISTÊNCIA DA INSCRIÇÃO.
+       CONSULTAR CPF E STATUS NO SUPABASE
 
-       NÃO CONSULTAMOS:
-       - status
-       - pagamento
-       - payment_url
-       - izy_payment_url
-       - valor
+       Coluna de pagamento: status_pagamento
     ===================================================== */
 
     async function consultarCPF(cpfInformado) {
 
-        const cpfLimpo =
-            limparCPF(cpfInformado);
+        const cpfLimpo = limparCPF(cpfInformado);
 
-
-        const resposta = await db
+        const { data, error } = await db
             .from("inscricoes")
             .select(`
                 id,
                 nome,
                 cpf,
                 percurso,
-                camiseta
+                camiseta,
+                status_pagamento
             `)
             .eq("cpf", cpfLimpo)
-            .limit(1);
+            .limit(1)
+            .maybeSingle();
 
-
-        if (resposta.error) {
-
+        if (error) {
             console.error(
-                "Erro retornado pelo Supabase:",
-                resposta.error
+                "Erro ao consultar Supabase:",
+                error
             );
 
-            throw resposta.error;
+            throw error;
         }
 
-
-        if (
-            !resposta.data ||
-            resposta.data.length === 0
-        ) {
-
-            return null;
-        }
-
-
-        return resposta.data[0];
+        return data || null;
     }
 
 
@@ -326,136 +249,187 @@ document.addEventListener("DOMContentLoaded", () => {
     function mostrarInscricao(inscricao) {
 
         /*
-           Nome
+           Lê o status da coluna correta.
         */
+
+        const status = normalizarStatus(
+            inscricao.status_pagamento
+        );
+
+        const estaPago = status === "PAGO";
+
+        const eCortesia = [
+            "CORTESIA",
+            "CORTESIA_CONFIRMADA",
+            "ISENTO",
+            "ISENTA",
+            "GRATUITO",
+            "GRATUITA",
+            "GRATUIDADE"
+        ].includes(status);
+
+        const estaCancelado = [
+            "CANCELADO",
+            "CANCELADA"
+        ].includes(status);
+
+        const estaPendente = [
+            "PENDENTE",
+            "AGUARDANDO_PAGAMENTO",
+            "AGUARDANDO",
+            "EM_ABERTO"
+        ].includes(status);
+
+
+        /* Determinar apresentação */
+
+        let textoStatus;
+        let textoMensagem;
+        let classeStatus;
+
+        if (estaPago) {
+
+            textoStatus = "PAGO";
+            textoMensagem = "Seu pagamento foi confirmado!";
+            classeStatus = "status-pago";
+
+        } else if (eCortesia) {
+
+            textoStatus = "CORTESIA";
+            textoMensagem = "Sua inscrição está confirmada como cortesia. Você não precisa realizar pagamento.";
+            classeStatus = "status-pago";
+
+        } else if (estaCancelado) {
+
+            textoStatus = "CANCELADO";
+            textoMensagem = "Sua inscrição está cancelada. Entre em contato com a organização.";
+            classeStatus = "status-cancelado";
+
+        } else if (estaPendente) {
+
+            textoStatus = "AGUARDANDO PAGAMENTO";
+            textoMensagem = "Sua inscrição foi encontrada. O pagamento ainda está pendente.";
+            classeStatus = "status-pendente";
+
+        } else {
+
+            textoStatus = status || "STATUS NÃO INFORMADO";
+            textoMensagem = "Inscrição encontrada, mas o status do pagamento precisa ser confirmado com a organização.";
+            classeStatus = "status-pendente";
+        }
+
+
+        /* Nome */
 
         if (resultadoNome) {
-
             resultadoNome.textContent =
-                inscricao.nome ||
-                "Participante";
+                inscricao.nome || "Participante";
         }
 
 
-        /*
-           CPF
-        */
+        /* CPF */
 
         if (resultadoCPF) {
-
-            resultadoCPF.textContent =
-                formatarCPF(
-                    inscricao.cpf ||
-                    cpf.value
-                );
-        }
-
-
-        /*
-           Percurso
-        */
-
-        if (resultadoPercurso) {
-
-            resultadoPercurso.textContent =
-                inscricao.percurso ||
-                "—";
-        }
-
-
-        /*
-           Camiseta
-        */
-
-        if (resultadoCamiseta) {
-
-            resultadoCamiseta.textContent =
-                inscricao.camiseta ||
-                "—";
-        }
-
-
-        /*
-           Valor fixo
-        */
-
-        if (resultadoValor) {
-
-            resultadoValor.textContent =
-                formatarValor();
-        }
-
-
-        /*
-           NÃO existe consulta de pagamento.
-
-           Portanto, toda inscrição encontrada
-           fica disponível para pagamento.
-        */
-
-        if (resultadoStatus) {
-
-            resultadoStatus.textContent =
-                "AGUARDANDO PAGAMENTO";
-        }
-
-
-        if (statusPagamento) {
-
-            statusPagamento.classList.remove(
-                "status-pago"
+            resultadoCPF.textContent = formatarCPF(
+                inscricao.cpf || cpf.value
             );
         }
 
 
-        /*
-           Link fixo da Izy
-        */
+        /* Percurso */
 
-        if (btnPagamento) {
-
-            btnPagamento.href =
-                IZY_PAYMENT_URL;
-
-            btnPagamento.target =
-                "_blank";
-
-            btnPagamento.rel =
-                "noopener noreferrer";
-
-            btnPagamento.style.display =
-                "flex";
+        if (resultadoPercurso) {
+            resultadoPercurso.textContent =
+                inscricao.percurso || "—";
         }
 
 
-        /*
-           Mostrar resultado
-        */
+        /* Camiseta */
 
-        resultado.hidden = false;
-
-        resultado.style.display =
-            "block";
+        if (resultadoCamiseta) {
+            resultadoCamiseta.textContent =
+                inscricao.camiseta || "—";
+        }
 
 
-        /*
-           Mensagem de sucesso
-        */
+        /* Valor */
+
+        if (resultadoValor) {
+            resultadoValor.textContent =
+                eCortesia ? "CORTESIA" : "R$ 89,90";
+        }
+
+
+        /* Status principal */
+
+        if (resultadoStatus) {
+
+            resultadoStatus.textContent = textoStatus;
+
+            resultadoStatus.classList.remove(
+                "status-pago",
+                "status-pendente",
+                "status-cancelado"
+            );
+
+            resultadoStatus.classList.add(classeStatus);
+        }
+
+
+        /* Mensagem complementar */
+
+        if (statusPagamento) {
+
+            statusPagamento.textContent = textoMensagem;
+
+            statusPagamento.classList.remove(
+                "status-pago",
+                "status-pendente",
+                "status-cancelado"
+            );
+
+            statusPagamento.classList.add(classeStatus);
+        }
+
+
+        /* Botão de pagamento */
+
+        if (btnPagamento) {
+
+            const podePagar =
+                estaPendente;
+
+            btnPagamento.href = IZY_PAYMENT_URL;
+            btnPagamento.target = "_blank";
+            btnPagamento.rel = "noopener noreferrer";
+
+            btnPagamento.style.display =
+                podePagar ? "flex" : "none";
+        }
+
+
+        /* Exibir resultado */
+
+        if (resultado) {
+
+            resultado.hidden = false;
+            resultado.style.display = "block";
+
+            resultado.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        }
+
+
+        /* Exibir mensagem */
 
         mostrarMensagem(
-            "Inscrição encontrada! Agora você pode realizar o pagamento.",
-            "sucesso"
+            textoMensagem,
+            estaPago || eCortesia ? "sucesso" :
+            estaCancelado ? "erro" :
+            estaPendente ? "sucesso" : "erro"
         );
-
-
-        /*
-           Rolar até o resultado
-        */
-
-        resultado.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest"
-        });
     }
 
 
@@ -463,193 +437,129 @@ document.addEventListener("DOMContentLoaded", () => {
        MÁSCARA CPF
     ===================================================== */
 
-    cpf.addEventListener(
-        "input",
-        () => {
+    cpf.addEventListener("input", () => {
 
-            cpf.value =
-                formatarCPF(cpf.value);
+        cpf.value = formatarCPF(cpf.value);
 
-            esconderResultado();
-            limparMensagem();
-        }
-    );
+        esconderResultado();
+        limparMensagem();
+    });
 
 
     /* =====================================================
-       ENVIO DO FORMULÁRIO
+       CONSULTAR INSCRIÇÃO
     ===================================================== */
 
-    form.addEventListener(
-        "submit",
-        async (event) => {
+    form.addEventListener("submit", async (event) => {
 
-            event.preventDefault();
+        event.preventDefault();
 
+        limparMensagem();
+        esconderResultado();
 
-            limparMensagem();
-            esconderResultado();
-
-
-            const cpfLimpo =
-                limparCPF(cpf.value);
+        const cpfLimpo = limparCPF(cpf.value);
 
 
-            /*
-               CPF incompleto
-            */
+        /* CPF incompleto */
 
-            if (cpfLimpo.length !== 11) {
+        if (cpfLimpo.length !== 11) {
+
+            mostrarMensagem(
+                "Digite o CPF completo.",
+                "erro"
+            );
+
+            cpf.focus();
+            return;
+        }
+
+
+        /* CPF inválido */
+
+        if (!cpfValido(cpfLimpo)) {
+
+            mostrarMensagem(
+                "Digite um CPF válido.",
+                "erro"
+            );
+
+            cpf.focus();
+            return;
+        }
+
+
+        /* Carregamento */
+
+        if (btnConsultar) {
+
+            btnConsultar.disabled = true;
+
+            const span = btnConsultar.querySelector("span");
+
+            if (span) {
+                span.textContent = "CONSULTANDO...";
+            }
+        }
+
+
+        try {
+
+            const inscricao = await consultarCPF(cpfLimpo);
+
+            if (!inscricao) {
 
                 mostrarMensagem(
-                    "Digite o CPF completo.",
+                    "CPF não encontrado. Verifique o número informado.",
                     "erro"
                 );
-
-                cpf.focus();
 
                 return;
             }
 
+            mostrarInscricao(inscricao);
 
-            /*
-               CPF inválido
-            */
+        } catch (erro) {
 
-            if (!cpfValido(cpfLimpo)) {
+            console.error(
+                "Erro ao consultar inscrição:",
+                erro
+            );
 
-                mostrarMensagem(
-                    "Digite um CPF válido.",
-                    "erro"
-                );
+            mostrarMensagem(
+                "Não foi possível consultar sua inscrição. Tente novamente.",
+                "erro"
+            );
 
-                cpf.focus();
-
-                return;
-            }
-
-
-            /*
-               Estado do botão
-            */
+        } finally {
 
             if (btnConsultar) {
 
-                btnConsultar.disabled = true;
+                btnConsultar.disabled = false;
 
-                const span =
-                    btnConsultar.querySelector(
-                        "span"
-                    );
+                const span = btnConsultar.querySelector("span");
 
                 if (span) {
-
-                    span.textContent =
-                        "CONSULTANDO...";
-                }
-            }
-
-
-            try {
-
-                /*
-                   Consulta somente o CPF
-                */
-
-                const inscricao =
-                    await consultarCPF(
-                        cpfLimpo
-                    );
-
-
-                /*
-                   CPF não encontrado
-                */
-
-                if (!inscricao) {
-
-                    mostrarMensagem(
-                        "CPF não encontrado. Verifique o número informado.",
-                        "erro"
-                    );
-
-                    return;
-                }
-
-
-                /*
-                   CPF encontrado
-                */
-
-                mostrarInscricao(
-                    inscricao
-                );
-
-
-            } catch (erro) {
-
-                console.error(
-                    "Erro ao consultar CPF:",
-                    erro
-                );
-
-
-                /*
-                   Mostra o erro real no console
-                   para facilitar a identificação.
-                */
-
-                mostrarMensagem(
-                    "Não foi possível consultar sua inscrição. Tente novamente.",
-                    "erro"
-                );
-
-
-            } finally {
-
-                /*
-                   Restaurar botão
-                */
-
-                if (btnConsultar) {
-
-                    btnConsultar.disabled =
-                        false;
-
-                    const span =
-                        btnConsultar.querySelector(
-                            "span"
-                        );
-
-                    if (span) {
-
-                        span.textContent =
-                            "CONSULTAR INSCRIÇÃO";
-                    }
+                    span.textContent = "CONSULTAR INSCRIÇÃO";
                 }
             }
         }
-    );
+    });
 
 
     /* =====================================================
-       INICIALIZAÇÃO CPF
+       INICIALIZAÇÃO
     ===================================================== */
 
-    cpf.value =
-        formatarCPF(cpf.value);
+    cpf.value = formatarCPF(cpf.value);
 
+    esconderResultado();
 
     console.log(
-        "✅ Pagar inscrição carregado."
+        "Run & Samba 2026: consulta de CPF inicializada."
     );
 
     console.log(
-        "✅ Supabase configurado somente para consulta de CPF."
-    );
-
-    console.log(
-        "✅ Pagamento será realizado externamente pela Izy."
+        "Consulta de pagamento utiliza a coluna status_pagamento."
     );
 
 });
