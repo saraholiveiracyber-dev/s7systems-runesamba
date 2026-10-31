@@ -1,12 +1,16 @@
+
+"use strict";
+
 /* =========================================================
    RUN & SAMBA 2026
    SISTEMA DE INSCRIÇÕES
-   ========================================================= */
+   SUPABASE + IZY + EMBAIXADORES
+========================================================= */
 
 
 /* =========================================================
-   CONFIGURAÇÃO SUPABASE
-   ========================================================= */
+   CONFIGURAÇÕES
+========================================================= */
 
 const SUPABASE_URL =
     "https://tqezxxobxsipjjuyydvc.supabase.co";
@@ -14,30 +18,142 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_Yt-DyfGqRqfbPN6aPgLM5w_K2RIneDd";
 
-
-/* =========================================================
-   CONFIGURAÇÃO IZY
-   ========================================================= */
-
 const IZY_PAYMENT_URL =
     "https://eventos.izypass.com.br/share/run-and-samba-2-edicao_luziania_20-11-2026";
 
-
-/* =========================================================
-   SUPABASE
-   ========================================================= */
-
-const { createClient } = supabase;
-
-const db = createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
+const CHAVE_EMBAIXADOR =
+    "runSambaCodigoEmbaixador";
 
 
 /* =========================================================
-   INICIALIZAÇÃO
-   ========================================================= */
+   INICIALIZAR SUPABASE
+========================================================= */
+
+let db = null;
+
+if (window.supabase?.createClient) {
+
+    db = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+} else {
+
+    console.error(
+        "Supabase não foi carregado. Verifique o CDN no HTML."
+    );
+
+}
+
+
+/* =========================================================
+   RASTREAMENTO DE EMBAIXADORES
+========================================================= */
+
+/*
+   Exemplo de link:
+
+   inscricoes.html?embaixador=SARAH01
+
+   O código fica salvo na sessão do navegador.
+*/
+
+function capturarCodigoEmbaixador() {
+
+    try {
+
+        const parametros = new URLSearchParams(
+            window.location.search
+        );
+
+        const codigoURL = (
+            parametros.get("embaixador") || ""
+        ).trim().toUpperCase();
+
+        if (!codigoURL) {
+            return;
+        }
+
+        if (!/^[A-Z0-9_-]{3,30}$/.test(codigoURL)) {
+
+            console.warn(
+                "Código de embaixador com formato inválido."
+            );
+
+            return;
+        }
+
+        sessionStorage.setItem(
+            CHAVE_EMBAIXADOR,
+            codigoURL
+        );
+
+        console.log(
+            "Código de indicação identificado:",
+            codigoURL
+        );
+
+    } catch (erro) {
+
+        console.error(
+            "Não foi possível guardar o código de indicação:",
+            erro
+        );
+
+    }
+}
+
+
+function obterCodigoEmbaixador() {
+
+    try {
+
+        return (
+            sessionStorage.getItem(CHAVE_EMBAIXADOR) || ""
+        ).trim().toUpperCase();
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao recuperar código de indicação:",
+            erro
+        );
+
+        return "";
+
+    }
+
+}
+
+
+function limparCodigoEmbaixador() {
+
+    try {
+
+        sessionStorage.removeItem(
+            CHAVE_EMBAIXADOR
+        );
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao limpar código de indicação:",
+            erro
+        );
+
+    }
+
+}
+
+
+/* Capturar o código assim que o arquivo carregar */
+capturarCodigoEmbaixador();
+
+
+/* =========================================================
+   INICIALIZAÇÃO DA PÁGINA
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -47,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ELEMENTOS
-       ===================================================== */
+       ELEMENTOS DO FORMULÁRIO
+    ===================================================== */
 
     const form =
         document.getElementById("form-inscricao");
@@ -82,8 +198,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CONTAGEM REGRESSIVA — 20/11/2026
-       ===================================================== */
+       VERIFICAR FORMULÁRIO
+    ===================================================== */
+
+    if (!form) {
+
+        console.error(
+            "Formulário #form-inscricao não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       MENSAGENS
+    ===================================================== */
+
+    function mostrarMensagem(
+        texto,
+        tipo = "erro"
+    ) {
+
+        if (!mensagem) {
+
+            alert(texto);
+
+            return;
+
+        }
+
+        mensagem.textContent = texto;
+
+        mensagem.className =
+            `mensagem-formulario ${tipo}`;
+
+        mensagem.style.display = "block";
+
+    }
+
+
+    function limparMensagem() {
+
+        if (!mensagem) {
+            return;
+        }
+
+        mensagem.textContent = "";
+
+        mensagem.className =
+            "mensagem-formulario";
+
+        mensagem.style.display = "none";
+
+    }
+
+
+    /* =====================================================
+       SOMENTE NÚMEROS
+    ===================================================== */
+
+    function somenteNumeros(valor) {
+
+        return String(valor || "")
+            .replace(/\D/g, "");
+
+    }
+
+
+    /* =====================================================
+       CONTAGEM REGRESSIVA
+       EVENTO: 20/11/2026
+    ===================================================== */
 
     const dataEvento = new Date(
         2026,
@@ -109,9 +296,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function atualizarContagem() {
 
-        const agora = Date.now();
-
-        const diferenca = dataEvento - agora;
+        const diferenca =
+            dataEvento - Date.now();
 
         if (diferenca <= 0) {
 
@@ -132,6 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             return;
+
         }
 
         const dias = Math.floor(
@@ -169,23 +356,29 @@ document.addEventListener("DOMContentLoaded", () => {
             elementoSegundos.textContent =
                 String(segundos).padStart(2, "0");
         }
+
     }
+
 
     atualizarContagem();
 
-    setInterval(atualizarContagem, 1000);
+    setInterval(
+        atualizarContagem,
+        1000
+    );
 
 
     /* =====================================================
-       CAMPOS DO FORMULÁRIO
-       FUNDO ESCURO + LETRAS BRANCAS
-       ===================================================== */
+       ESTILO DOS CAMPOS
+       FUNDO ESCURO + TEXTO BRANCO
+    ===================================================== */
 
     const camposTexto = document.querySelectorAll(
         "#form-inscricao input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='button']), " +
         "#form-inscricao textarea, " +
         "#form-inscricao select"
     );
+
 
     function aplicarEstiloCampos() {
 
@@ -227,9 +420,12 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         });
+
     }
 
+
     aplicarEstiloCampos();
+
 
     camposTexto.forEach((campo) => {
 
@@ -238,34 +434,37 @@ document.addEventListener("DOMContentLoaded", () => {
             aplicarEstiloCampos
         );
 
-        campo.addEventListener("focus", () => {
+        campo.addEventListener(
+            "focus",
+            () => {
 
-            campo.style.setProperty(
-                "background-color",
-                "#171717",
-                "important"
-            );
+                campo.style.setProperty(
+                    "background-color",
+                    "#171717",
+                    "important"
+                );
 
-            campo.style.setProperty(
-                "color",
-                "#ffffff",
-                "important"
-            );
+                campo.style.setProperty(
+                    "color",
+                    "#ffffff",
+                    "important"
+                );
 
-            campo.style.setProperty(
-                "-webkit-text-fill-color",
-                "#ffffff",
-                "important"
-            );
+                campo.style.setProperty(
+                    "-webkit-text-fill-color",
+                    "#ffffff",
+                    "important"
+                );
 
-        });
+            }
+        );
 
     });
 
 
     /* =====================================================
-       RESUMO
-       ===================================================== */
+       RESUMO DA INSCRIÇÃO
+    ===================================================== */
 
     const resumoNome =
         document.getElementById("resumo-nome");
@@ -281,73 +480,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       VERIFICAR FORMULÁRIO
-       ===================================================== */
-
-    if (!form) {
-
-        console.error(
-            "Formulário #form-inscricao não encontrado."
-        );
-
-        return;
-    }
-
-
-    /* =====================================================
-       MENSAGENS
-       ===================================================== */
-
-    function mostrarMensagem(
-        texto,
-        tipo = "erro"
-    ) {
-
-        if (!mensagem) {
-
-            alert(texto);
-
-            return;
-        }
-
-        mensagem.textContent = texto;
-
-        mensagem.className =
-            `mensagem-formulario ${tipo}`;
-
-        mensagem.style.display = "block";
-    }
-
-
-    function limparMensagem() {
-
-        if (!mensagem) {
-            return;
-        }
-
-        mensagem.textContent = "";
-
-        mensagem.className =
-            "mensagem-formulario";
-
-        mensagem.style.display = "none";
-    }
-
-
-    /* =====================================================
-       SOMENTE NÚMEROS
-       ===================================================== */
-
-    function somenteNumeros(valor) {
-
-        return String(valor || "")
-            .replace(/\D/g, "");
-    }
-
-
-    /* =====================================================
        CPF — MÁSCARA
-       ===================================================== */
+    ===================================================== */
 
     cpf?.addEventListener("input", () => {
 
@@ -380,12 +514,13 @@ document.addEventListener("DOMContentLoaded", () => {
         cpf.value = valor;
 
         limparMensagem();
+
     });
 
 
     /* =====================================================
-       DATA — MÁSCARA
-       ===================================================== */
+       NASCIMENTO — MÁSCARA
+    ===================================================== */
 
     nascimento?.addEventListener("input", () => {
 
@@ -409,12 +544,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         nascimento.value = valor;
+
     });
 
 
     /* =====================================================
        TELEFONE — MÁSCARA
-       ===================================================== */
+    ===================================================== */
 
     telefone?.addEventListener("input", () => {
 
@@ -445,12 +581,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         telefone.value = valor;
+
     });
 
 
     /* =====================================================
        CPF — VALIDAÇÃO
-       ===================================================== */
+    ===================================================== */
 
     function cpfValido(valor) {
 
@@ -496,13 +633,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const digito2 =
             resto < 2 ? 0 : 11 - resto;
 
-        return digito2 === Number(numero[10]);
+        return (
+            digito2 === Number(numero[10])
+        );
+
     }
 
 
     /* =====================================================
-       DATA — VALIDAÇÃO
-       ===================================================== */
+       NASCIMENTO — VALIDAÇÃO
+    ===================================================== */
 
     function dataValida(data) {
 
@@ -522,11 +662,13 @@ document.addEventListener("DOMContentLoaded", () => {
             !dia ||
             !mes ||
             !ano ||
+            ano < 1900 ||
             mes < 1 ||
             mes > 12
         ) {
 
             return false;
+
         }
 
         const dataObj = new Date(
@@ -535,17 +677,24 @@ document.addEventListener("DOMContentLoaded", () => {
             dia
         );
 
-        return (
+        const dataCorreta = (
             dataObj.getFullYear() === ano &&
             dataObj.getMonth() === mes - 1 &&
             dataObj.getDate() === dia
         );
+
+        if (!dataCorreta) {
+            return false;
+        }
+
+        return dataObj <= new Date();
+
     }
 
 
     /* =====================================================
-       DATA — CONVERTER
-       ===================================================== */
+       NASCIMENTO — CONVERSÃO PARA SUPABASE
+    ===================================================== */
 
     function converterData(data) {
 
@@ -562,36 +711,39 @@ document.addEventListener("DOMContentLoaded", () => {
         const ano = partes[2];
 
         return `${ano}-${mes}-${dia}`;
+
     }
 
 
     /* =====================================================
        PERCURSO
-       ===================================================== */
+    ===================================================== */
 
     function obterPercurso() {
 
         return document.querySelector(
             'input[name="percurso"]:checked'
         );
+
     }
 
 
     /* =====================================================
        CAMISETA
-       ===================================================== */
+    ===================================================== */
 
     function obterCamiseta() {
 
         return document.querySelector(
             'input[name="camiseta"]:checked'
         );
+
     }
 
 
     /* =====================================================
        VALOR DO PERCURSO
-       ===================================================== */
+    ===================================================== */
 
     function obterValorPercurso(percurso) {
 
@@ -616,12 +768,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return Number.isFinite(numero)
             ? numero
             : 0;
+
     }
 
 
     /* =====================================================
        FORMATAR VALOR
-       ===================================================== */
+    ===================================================== */
 
     function formatarValor(valor) {
 
@@ -632,12 +785,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 currency: "BRL"
             }
         );
+
     }
 
 
     /* =====================================================
        ATUALIZAR RESUMO
-       ===================================================== */
+    ===================================================== */
 
     function atualizarResumo() {
 
@@ -645,8 +799,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const camiseta = obterCamiseta();
 
-
-        /* NOME */
 
         if (resumoNome) {
 
@@ -656,8 +808,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* PERCURSO */
-
         if (resumoPercurso) {
 
             resumoPercurso.textContent =
@@ -665,8 +815,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /* CAMISETA */
 
         if (resumoCamiseta) {
 
@@ -676,8 +824,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* VALOR */
-
         if (resumoValor) {
 
             if (!percurso) {
@@ -686,20 +832,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } else {
 
-                const valor =
-                    obterValorPercurso(percurso);
-
                 resumoValor.textContent =
-                    formatarValor(valor);
+                    formatarValor(
+                        obterValorPercurso(percurso)
+                    );
 
             }
+
         }
+
     }
 
 
     /* =====================================================
        EVENTOS DO RESUMO
-       ===================================================== */
+    ===================================================== */
 
     nome?.addEventListener(
         "input",
@@ -733,7 +880,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        MODAL DO TERMO
-       ===================================================== */
+    ===================================================== */
 
     const abrirTermo =
         document.getElementById("abrirTermo");
@@ -764,9 +911,13 @@ document.addEventListener("DOMContentLoaded", () => {
             "false"
         );
 
-        document.body.classList.add("modal-aberto");
+        document.body.classList.add(
+            "modal-aberto"
+        );
 
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow =
+            "hidden";
+
     }
 
 
@@ -783,9 +934,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "true"
         );
 
-        document.body.classList.remove("modal-aberto");
+        document.body.classList.remove(
+            "modal-aberto"
+        );
 
         document.body.style.overflow = "";
+
     }
 
 
@@ -838,17 +992,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        VERIFICAR CPF NO SUPABASE
-       ===================================================== */
+    ===================================================== */
 
     async function verificarCPF(cpfInformado) {
 
+        if (!db) {
+            throw new Error("Supabase não inicializado.");
+        }
+
         const cpfLimpo =
             somenteNumeros(cpfInformado);
-
-        console.log(
-            "Consultando CPF:",
-            cpfLimpo
-        );
 
         const resposta = await db
             .from("inscricoes")
@@ -864,18 +1017,57 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             throw resposta.error;
+
         }
 
         return Boolean(
             resposta.data &&
             resposta.data.length > 0
         );
+
     }
 
 
     /* =====================================================
-       SALVAR DADOS DA INSCRIÇÃO
-       ===================================================== */
+       VALIDAR CÓDIGO DO EMBAIXADOR
+    ===================================================== */
+
+    async function validarCodigoEmbaixador(codigo) {
+
+        if (!codigo) {
+            return false;
+        }
+
+        if (!db) {
+            throw new Error("Supabase não inicializado.");
+        }
+
+        const resposta = await db.rpc(
+            "validar_codigo_embaixador",
+            {
+                p_codigo: codigo
+            }
+        );
+
+        if (resposta.error) {
+
+            console.error(
+                "Erro ao validar embaixador:",
+                resposta.error
+            );
+
+            throw resposta.error;
+
+        }
+
+        return resposta.data === true;
+
+    }
+
+
+    /* =====================================================
+       SALVAR DADOS PARA A PÁGINA OBRIGADO
+    ===================================================== */
 
     function salvarDadosInscricao(
         valor,
@@ -887,15 +1079,11 @@ document.addEventListener("DOMContentLoaded", () => {
             formatarValor(valor);
 
 
-        /* VALOR FORMATADO */
-
         localStorage.setItem(
             "valorInscricao",
             valorFormatado
         );
 
-
-        /* VALOR NUMÉRICO */
 
         localStorage.setItem(
             "valorInscricaoNumerico",
@@ -903,15 +1091,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /* PERCURSO */
-
         localStorage.setItem(
             "percursoInscricao",
             percursoSelecionado
         );
 
-
-        /* NOME */
 
         localStorage.setItem(
             "nomeInscricao",
@@ -919,29 +1103,44 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /* LINK DA IZY */
-
         localStorage.setItem(
             "izyPaymentUrl",
             IZY_PAYMENT_URL
         );
 
         console.log(
-            "Dados salvos para página obrigado:",
-            {
-                nome: nomeParticipante,
-                percurso: percursoSelecionado,
-                valor: valorFormatado,
-                valorNumerico: valor,
-                izy: IZY_PAYMENT_URL
-            }
+            "Dados da inscrição preparados para a página de confirmação."
         );
+
+    }
+
+
+    /* =====================================================
+       CONTROLE DO BOTÃO
+    ===================================================== */
+
+    function liberarBotao() {
+
+        if (botao) {
+            botao.disabled = false;
+        }
+
+        const spanBotao =
+            botao?.querySelector("span");
+
+        if (spanBotao) {
+
+            spanBotao.textContent =
+                "CONTINUAR INSCRIÇÃO";
+
+        }
+
     }
 
 
     /* =====================================================
        ENVIO DO FORMULÁRIO
-       ===================================================== */
+    ===================================================== */
 
     form.addEventListener(
         "submit",
@@ -953,20 +1152,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             /* ---------------------------------------------
+               VALIDAR SUPABASE
+            --------------------------------------------- */
+
+            if (!db) {
+
+                mostrarMensagem(
+                    "Sistema temporariamente indisponível. Tente novamente.",
+                    "erro"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
                VALIDAÇÃO HTML
-               --------------------------------------------- */
+            --------------------------------------------- */
 
             if (!form.checkValidity()) {
 
                 form.reportValidity();
 
                 return;
+
             }
 
 
             /* ---------------------------------------------
-               CPF
-               --------------------------------------------- */
+               VALIDAR CPF
+            --------------------------------------------- */
 
             const cpfLimpo =
                 somenteNumeros(cpf.value);
@@ -981,12 +1197,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 cpf.focus();
 
                 return;
+
             }
 
 
             /* ---------------------------------------------
-               DATA
-               --------------------------------------------- */
+               VALIDAR NASCIMENTO
+            --------------------------------------------- */
 
             if (!dataValida(nascimento.value)) {
 
@@ -998,12 +1215,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 nascimento.focus();
 
                 return;
+
             }
 
 
             /* ---------------------------------------------
-               PERCURSO
-               --------------------------------------------- */
+               VALIDAR PERCURSO
+            --------------------------------------------- */
 
             const percurso = obterPercurso();
 
@@ -1015,12 +1233,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 return;
+
             }
 
 
             /* ---------------------------------------------
-               CAMISETA
-               --------------------------------------------- */
+               VALIDAR CAMISETA
+            --------------------------------------------- */
 
             const camiseta = obterCamiseta();
 
@@ -1032,12 +1251,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 return;
+
             }
 
 
             /* ---------------------------------------------
-               TERMO
-               --------------------------------------------- */
+               VALIDAR TERMO
+            --------------------------------------------- */
 
             if (
                 !aceiteTermo ||
@@ -1050,12 +1270,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 return;
+
             }
 
 
             /* ---------------------------------------------
-               VALOR
-               --------------------------------------------- */
+               VALIDAR VALOR
+            --------------------------------------------- */
 
             const valor =
                 obterValorPercurso(percurso);
@@ -1073,16 +1294,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 return;
+
             }
 
 
             /* =================================================
                PROCESSAMENTO
-               ================================================= */
+            ================================================= */
 
             try {
-
-                /* BLOQUEAR BOTÃO */
 
                 if (botao) {
                     botao.disabled = true;
@@ -1091,17 +1311,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 const spanBotao =
                     botao?.querySelector("span");
 
+
+                /* ---------------------------------------------
+                   VERIFICAR CPF
+                --------------------------------------------- */
+
                 if (spanBotao) {
 
                     spanBotao.textContent =
                         "VERIFICANDO CPF...";
 
                 }
-
-
-                /* ---------------------------------------------
-                   VERIFICAR CPF
-                   --------------------------------------------- */
 
                 const existe =
                     await verificarCPF(cpfLimpo);
@@ -1115,24 +1335,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     cpf.focus();
 
-                    if (botao) {
-                        botao.disabled = false;
-                    }
-
-                    if (spanBotao) {
-
-                        spanBotao.textContent =
-                            "CONTINUAR INSCRIÇÃO";
-
-                    }
+                    liberarBotao();
 
                     return;
+
                 }
 
 
                 /* ---------------------------------------------
-                   CADASTRANDO
-                   --------------------------------------------- */
+                   VALIDAR EMBAIXADOR
+                --------------------------------------------- */
+
+                const codigoEmbaixador =
+                    obterCodigoEmbaixador();
+
+                let codigoEmbaixadorValidado = null;
+
+                if (codigoEmbaixador) {
+
+                    if (spanBotao) {
+
+                        spanBotao.textContent =
+                            "VALIDANDO INDICAÇÃO...";
+
+                    }
+
+                    const codigoAtivo =
+                        await validarCodigoEmbaixador(
+                            codigoEmbaixador
+                        );
+
+                    if (codigoAtivo) {
+
+                        codigoEmbaixadorValidado =
+                            codigoEmbaixador;
+
+                        console.log(
+                            "Indicação validada:",
+                            codigoEmbaixadorValidado
+                        );
+
+                    } else {
+
+                        console.warn(
+                            "Código de embaixador inválido ou inativo."
+                        );
+
+                        mostrarMensagem(
+                            "O link de indicação não está mais ativo. Sua inscrição continuará como inscrição geral.",
+                            "aviso"
+                        );
+
+                    }
+
+                }
+
+
+                /* ---------------------------------------------
+                   PREPARAR CADASTRO
+                --------------------------------------------- */
 
                 if (spanBotao) {
 
@@ -1175,20 +1436,29 @@ document.addEventListener("DOMContentLoaded", () => {
                         "pendente",
 
                     status_pagamento:
-                        "pendente"
+                        "pendente",
+
+                    codigo_embaixador:
+                        codigoEmbaixadorValidado
 
                 };
 
 
                 console.log(
-                    "Dados enviados ao Supabase:",
-                    dadosInscricao
+                    "Registrando inscrição no Supabase.",
+                    {
+                        percurso: dadosInscricao.percurso,
+                        valor: dadosInscricao.valor,
+                        possuiIndicacao: Boolean(
+                            dadosInscricao.codigo_embaixador
+                        )
+                    }
                 );
 
 
                 /* ---------------------------------------------
                    INSERT SUPABASE
-                   --------------------------------------------- */
+                --------------------------------------------- */
 
                 const resultado = await db
                     .from("inscricoes")
@@ -1200,8 +1470,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* ---------------------------------------------
-                   ERRO SUPABASE
-                   --------------------------------------------- */
+                   TRATAR ERRO SUPABASE
+                --------------------------------------------- */
 
                 if (resultado.error) {
 
@@ -1219,39 +1489,40 @@ document.addEventListener("DOMContentLoaded", () => {
                             "erro"
                         );
 
-                        if (botao) {
-                            botao.disabled = false;
-                        }
-
-                        if (spanBotao) {
-
-                            spanBotao.textContent =
-                                "CONTINUAR INSCRIÇÃO";
-
-                        }
-
                         cpf.focus();
 
+                        liberarBotao();
+
                         return;
+
                     }
 
                     throw resultado.error;
+
                 }
 
 
                 /* =================================================
                    INSCRIÇÃO REGISTRADA
-                   ================================================= */
+                ================================================= */
 
                 console.log(
                     "Inscrição registrada com sucesso:",
-                    resultado.data
+                    resultado.data?.id
                 );
 
 
-                /* =================================================
+                /* ---------------------------------------------
+                   LIMPAR CÓDIGO DA SESSÃO
+                   Somente após o cadastro bem-sucedido
+                --------------------------------------------- */
+
+                limparCodigoEmbaixador();
+
+
+                /* ---------------------------------------------
                    SALVAR DADOS PARA OBRIGADO
-                   ================================================= */
+                --------------------------------------------- */
 
                 salvarDadosInscricao(
                     valor,
@@ -1260,12 +1531,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-                /* =================================================
-                   REDIRECIONAMENTO
-                   ================================================= */
+                /* ---------------------------------------------
+                   REDIRECIONAR
+                --------------------------------------------- */
 
                 console.log(
-                    "Redirecionando para obrigado-inscricoes.html..."
+                    "Redirecionando para confirmação..."
                 );
 
                 window.location.href =
@@ -1276,7 +1547,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             /* =================================================
                ERRO GERAL
-               ================================================= */
+            ================================================= */
 
             catch (erro) {
 
@@ -1298,6 +1569,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     texto =
                         "O Supabase bloqueou o cadastro. Verifique as políticas RLS da tabela inscricoes.";
 
+                } else if (
+                    erro?.message === "Supabase não inicializado."
+                ) {
+
+                    texto =
+                        "Não foi possível conectar ao sistema. Atualize a página e tente novamente.";
+
+                } else if (
+                    obterCodigoEmbaixador()
+                ) {
+
+                    texto =
+                        "Não foi possível validar o código de indicação. Tente novamente para não perder a identificação do embaixador.";
+
                 }
 
                 mostrarMensagem(
@@ -1305,19 +1590,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "erro"
                 );
 
-                if (botao) {
-                    botao.disabled = false;
-                }
-
-                const spanBotao =
-                    botao?.querySelector("span");
-
-                if (spanBotao) {
-
-                    spanBotao.textContent =
-                        "CONTINUAR INSCRIÇÃO";
-
-                }
+                liberarBotao();
 
             }
 
@@ -1327,8 +1600,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       INICIALIZAÇÃO DO RESUMO
-       ===================================================== */
+       INICIALIZAR RESUMO
+    ===================================================== */
 
     atualizarResumo();
 
