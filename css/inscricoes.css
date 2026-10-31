@@ -1,430 +1,1799 @@
 ﻿
 /* =========================================================
-   HEADER INSCRIÇÕES — LOGO ACIMA DO NOME
-   ========================================================= */
+   RUN & SAMBA 2026
+   INSCRIÇÕES — CSS COMPLETO
+   Design Premium | Preto, Branco e Amarelo
+   Compatível com o HTML enviado
+========================================================= */
 
-.inscricao-header {
+/* =========================================================
+   01. VARIÁVEIS
+========================================================= */
+
+:root {
+    --yellow: #f5c400;
+    --yellow-hover: #ffd21a;
+    --black: #090909;
+    --dark: #0b0b0b;
+    --card: #121212;
+    --card-light: #181818;
+    --white: #ffffff;
+    --gray: #a5a5a5;
+    --border: rgba(255,255,255,.10);
+    --yellow-border: rgba(245,196,0,.25);
+    --font: 'Montserrat', sans-serif;
+    --radius: 12px;
+    --transition: .25s ease;
+}
+
+/* =========================================================
+   02. RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 30px;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+/* =========================================================
+   03. CABEÇALHO — CASO UTILIZADO
+========================================================= */
+
+.header {
     position: relative;
     z-index: 1000;
-
     width: 100%;
-    min-height: 150px;
+    background: #080808;
+    border-bottom: 1px solid rgba(245,196,0,.15);
+}
 
+.navbar {
+    min-height: 88px;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    background: #0b0b0b;
-
-    border-bottom: 1px solid rgba(245, 196, 0, 0.18);
-
-    overflow: hidden;
+    justify-content: space-between;
+    gap: 25px;
 }
 
-.inscricao-header::after {
-    content: "";
-
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 2px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #f5c400,
-        transparent
-    );
-
-    opacity: 0.65;
+.logo-link {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-.inscricao-header-inner {
+.logo {
+    width: 125px;
+    max-height: 65px;
+    object-fit: contain;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    list-style: none;
+}
+
+.menu a {
     position: relative;
-    z-index: 1;
-
-    width: min(1200px, calc(100% - 40px));
-    min-height: 150px;
-
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 12px 0;
+    color: #c5c5c5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .8px;
+    transition: var(--transition);
 }
 
-.inscricao-logo {
-    display: flex;
+.menu a:hover,
+.menu a.active {
+    color: var(--yellow);
+}
+
+.menu-mobile {
+    width: 43px;
+    height: 43px;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--yellow-border);
+    border-radius: 8px;
+    background: transparent;
+}
 
-    width: auto;
-    height: auto;
+.menu-mobile span {
+    width: 20px;
+    height: 2px;
+    background: var(--yellow);
+    border-radius: 5px;
+}
 
-    text-decoration: none;
+.mobile-menu-panel {
+    position: relative;
+    z-index: 1001;
+    width: 100%;
+    padding: 15px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: #0d0d0d;
+    border-top: 1px solid var(--yellow-border);
+    border-bottom: 1px solid var(--yellow-border);
+}
 
+.mobile-menu-panel a {
+    padding: 14px 12px;
+    color: #ddd;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.mobile-menu-panel a:hover,
+.mobile-menu-panel a.active {
+    color: var(--yellow);
+}
+
+/* =========================================================
+   04. BOTÃO REGULAMENTO
+========================================================= */
+
+.regulamento-link {
+    width: fit-content;
+    min-height: 40px;
+    padding: 7px 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-shrink: 0;
+    border: 1px solid rgba(245,196,0,.35);
+    border-radius: 7px;
+    background: rgba(245,196,0,.045);
+    transition: var(--transition);
+}
+
+.regulamento-link:hover {
+    background: rgba(245,196,0,.12);
+    border-color: var(--yellow);
+    transform: translateY(-2px);
+}
+
+.regulamento-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--yellow);
+}
+
+.regulamento-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.regulamento-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: left;
+}
+
+.regulamento-texto strong {
+    color: white;
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+
+.regulamento-texto small {
+    color: var(--gray);
+    font-size: 8px;
+}
+
+.regulamento-seta {
+    color: var(--yellow);
+    font-size: 13px;
+}
+
+/* =========================================================
+   05. CONTAGEM REGRESSIVA
+========================================================= */
+
+.countdown-bar {
+    min-height: 67px;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: #101010;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.countdown-bar-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c6c6c6;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.countdown-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 12px rgba(245,196,0,.6);
+    animation: countdownPulse 1.5s infinite;
+}
+
+@keyframes countdownPulse {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 12px rgba(245,196,0,.5);
+    }
+
+    50% {
+        opacity: .45;
+        box-shadow: 0 0 3px rgba(245,196,0,.2);
+    }
+}
+
+.countdown-bar-units {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.countdown-bar-unit {
+    min-width: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 4px;
 }
 
-.inscricao-logo img {
-    display: block;
-
-    width: 82px;
-    height: 82px;
-
-    max-width: 82px;
-    max-height: 82px;
-
-    object-fit: contain;
-
-    margin: 0 auto;
-
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
-}
-
-.inscricao-logo:hover img {
-    transform: scale(1.04);
-    opacity: 0.94;
-}
-
-/* =========================================================
-   NOME RUN & SAMBA 2026
-   ========================================================= */
-
-.inscricao-logo-texto {
-    display: block;
-
-    margin: 0;
-
-    color: #ffffff;
-
+.countdown-bar-unit strong {
+    color: var(--yellow);
     font-size: 20px;
-    font-weight: 800;
-
+    font-weight: 900;
     line-height: 1;
-
-    letter-spacing: 2px;
-
-    text-align: center;
-
-    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
 }
 
-.inscricao-logo-texto span {
-    color: #f5c400;
+.countdown-bar-unit span {
+    color: #888;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 800px) {
-
-    .inscricao-header {
-        min-height: 130px;
-    }
-
-    .inscricao-header-inner {
-        min-height: 130px;
-    }
-
-    .inscricao-logo img {
-        width: 70px;
-        height: 70px;
-
-        max-width: 70px;
-        max-height: 70px;
-    }
-
-    .inscricao-logo-texto {
-        font-size: 18px;
-        letter-spacing: 1.6px;
-    }
-
-}
-
-
-/* =========================================================
-   CELULAR
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .inscricao-header {
-        min-height: 120px;
-    }
-
-    .inscricao-header-inner {
-        min-height: 120px;
-    }
-
-    .inscricao-logo img {
-        width: 64px;
-        height: 64px;
-
-        max-width: 64px;
-        max-height: 64px;
-    }
-
-    .inscricao-logo-texto {
-        font-size: 16px;
-        letter-spacing: 1.3px;
-    }
-
-}
-
-
-/* =========================================================
-   CELULAR PEQUENO
-   ========================================================= */
-
-@media (max-width: 380px) {
-
-    .inscricao-header {
-        min-height: 112px;
-    }
-
-    .inscricao-header-inner {
-        min-height: 112px;
-    }
-
-    .inscricao-logo img {
-        width: 58px;
-        height: 58px;
-
-        max-width: 58px;
-        max-height: 58px;
-    }
-
-    .inscricao-logo-texto {
-        font-size: 15px;
-        letter-spacing: 1px;
-    }
-
-}
-
-
-/* =========================================================
-   HEADER INSCRIÇÕES — FUNDO ESCURO
-   ========================================================= */
-
-.inscricao-header {
-    position: relative;
-    z-index: 1000;
-
-    width: 100%;
-    height: 88px;
-
+.countdown-bar-cta {
+    min-height: 38px;
+    padding: 0 17px;
     display: flex;
     align-items: center;
-
-    background: #0b0b0b;
-
-    border-bottom: 1px solid rgba(245, 196, 0, 0.18);
-
-    overflow: hidden;
+    justify-content: center;
+    gap: 10px;
+    background: var(--yellow);
+    border-radius: 6px;
+    color: #080808;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .7px;
+    transition: var(--transition);
 }
 
-.inscricao-header::after {
-    content: "";
-
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 2px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #f5c400,
-        transparent
-    );
-
-    opacity: 0.65;
-}
-
-.inscricao-header-inner {
-    position: relative;
-    z-index: 1;
-
-    width: min(1200px, calc(100% - 40px));
-    height: 100%;
-
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-}
-
-.inscricao-logo {
-    display: flex;
-    align-items: center;
-
-    width: auto;
-    height: 100%;
-
-    text-decoration: none;
-}
-
-.inscricao-logo img {
-    display: block;
-
-    width: 145px;
-    height: auto;
-
-    max-width: 145px;
-    max-height: 70px;
-
-    object-fit: contain;
-
-    margin: 0;
-
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
-}
-
-.inscricao-logo:hover img {
-    transform: scale(1.03);
-    opacity: 0.92;
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 800px) {
-
-    .inscricao-header {
-        height: 76px;
-    }
-
-    .inscricao-header-inner {
-        width: calc(100% - 32px);
-    }
-
-    .inscricao-logo img {
-        width: 125px;
-        max-width: 125px;
-        max-height: 60px;
-    }
-
-}
-
-
-/* =========================================================
-   CELULAR
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .inscricao-header {
-        height: 68px;
-    }
-
-    .inscricao-header-inner {
-        width: calc(100% - 28px);
-    }
-
-    .inscricao-logo img {
-        width: 112px;
-        max-width: 112px;
-        max-height: 54px;
-    }
-
-}
-
-
-/* =========================================================
-   CELULAR PEQUENO
-   ========================================================= */
-
-@media (max-width: 380px) {
-
-    .inscricao-header {
-        height: 64px;
-    }
-
-    .inscricao-logo img {
-        width: 105px;
-        max-width: 105px;
-        max-height: 50px;
-    }
-
+.countdown-bar-cta:hover {
+    background: var(--yellow-hover);
+    transform: translateY(-2px);
 }
 
 /* =========================================================
-   PAGAMENTO — HERO
+   06. HERO — INSCRIÇÕES
 ========================================================= */
 
-.hero-pagamento {
-    width: min(380px, 100%);
-    margin: 25px auto 0;
+.inscricao-hero {
+    position: relative;
+    padding: 65px 20px 75px;
+    overflow: hidden;
+    text-align: center;
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(245,196,0,.12),
+            transparent 65%
+        ),
+        #0b0b0b;
+}
 
+.inscricao-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(245,196,0,.035);
+    filter: blur(80px);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.hero-content-inscricao {
+    position: relative;
+    z-index: 1;
+    width: min(800px, 100%);
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 9px;
+}
 
+/* LOGO CENTRALIZADA E MENOR */
+
+.hero-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 13px;
+}
+
+.hero-logo img {
+    width: 105px;
+    height: 85px;
+    object-fit: contain;
+    object-position: center;
+    margin: 0 auto;
+}
+
+/* Identificação do evento */
+
+.hero-content-inscricao > span {
+    display: block;
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 3px;
     text-align: center;
 }
 
-.hero-pagamento > span {
-    color: rgba(255, 255, 255, 0.65);
+.hero-content-inscricao h1 {
+    margin: 16px 0;
+    color: white;
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+}
 
-    font-size: 10px;
+.linha-amarela {
+    width: 58px;
+    height: 4px;
+    margin: 20px auto;
+    border-radius: 5px;
+    background: var(--yellow);
+}
+
+.hero-content-inscricao h2 {
+    margin-bottom: 13px;
+    color: white;
+    font-size: clamp(15px, 3vw, 21px);
     font-weight: 800;
-    letter-spacing: 1.2px;
+    letter-spacing: .8px;
+}
+
+.hero-content-inscricao p {
+    max-width: 550px;
+    margin: 0 auto;
+    color: var(--gray);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+/* =========================================================
+   07. PAGAMENTO — BOTÃO PRINCIPAL
+========================================================= */
+
+.hero-pagamento {
+    width: min(350px, 100%);
+    margin: 25px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-pagamento > span {
+    color: rgba(255,255,255,.65);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
 }
 
 .hero-pagamento a {
     width: 100%;
-    min-height: 54px;
-
-    padding: 0 18px;
-
+    min-height: 53px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    border: 1px solid #f5c400;
-    border-radius: 10px;
-
-    background: #f5c400;
-
+    border: 1px solid var(--yellow);
+    border-radius: 8px;
+    background: var(--yellow);
     color: #080808;
-
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
-    letter-spacing: 0.7px;
-
-    text-decoration: none;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
+    letter-spacing: .8px;
+    transition: var(--transition);
 }
 
 .hero-pagamento a:hover {
-    background: #ffd21a;
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 10px 30px rgba(245, 196, 0, 0.25);
+    background: var(--yellow-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(245,196,0,.2);
 }
 
 .hero-pagamento a strong {
+    font-size: 22px;
+}
+
+/* REGULAMENTO MENOR QUE PAGAMENTO */
+
+.hero-content-inscricao > .regulamento-link {
+    margin: 13px auto 0;
+    min-height: 35px;
+    padding: 6px 11px;
+    gap: 7px;
+    background: rgba(255,255,255,.025);
+    border-color: rgba(245,196,0,.25);
+}
+
+.hero-content-inscricao > .regulamento-link .regulamento-icon {
+    width: 17px;
+    height: 17px;
+}
+
+.hero-content-inscricao > .regulamento-link .regulamento-icon svg {
+    width: 15px;
+    height: 15px;
+}
+
+.hero-content-inscricao > .regulamento-link .regulamento-texto {
+    gap: 2px;
+}
+
+.hero-content-inscricao > .regulamento-link .regulamento-texto strong {
+    font-size: 7px;
+}
+
+.hero-content-inscricao > .regulamento-link .regulamento-texto small {
+    font-size: 7px;
+}
+
+.hero-content-inscricao > .regulamento-link .regulamento-seta {
+    font-size: 11px;
+}
+
+/* =========================================================
+   08. ÁREA DE INSCRIÇÃO
+========================================================= */
+
+.area-inscricao {
+    padding: 80px 20px;
+    background: var(--black);
+}
+
+.container-inscricao {
+    width: min(1150px, 100%);
+    margin: 0 auto;
+}
+
+/* =========================================================
+   09. INTRODUÇÃO
+========================================================= */
+
+.intro-inscricao {
+    margin-bottom: 42px;
+    text-align: center;
+}
+
+.intro-inscricao > span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.intro-inscricao h2 {
+    margin: 13px 0;
+    color: white;
+    font-size: clamp(25px, 4vw, 38px);
+    font-weight: 900;
+    letter-spacing: -.8px;
+}
+
+.intro-inscricao p {
+    color: var(--gray);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   10. FORMULÁRIO + RESUMO
+========================================================= */
+
+.layout-inscricao {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: 28px;
+}
+
+.formulario {
+    min-width: 0;
+}
+
+/* =========================================================
+   11. BLOCOS DO FORMULÁRIO
+========================================================= */
+
+.bloco-form {
+    margin-bottom: 24px;
+    padding: 30px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color var(--transition);
+}
+
+.bloco-form:hover {
+    border-color: rgba(245,196,0,.2);
+}
+
+.titulo-bloco {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.numero-bloco {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(245,196,0,.3);
+    border-radius: 10px;
+    background: rgba(245,196,0,.09);
+    color: var(--yellow);
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.titulo-bloco small {
+    color: var(--yellow);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.titulo-bloco h3 {
+    margin-top: 6px;
+    color: white;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.descricao-bloco {
+    margin-bottom: 25px;
+    color: var(--gray);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   12. CAMPOS
+========================================================= */
+
+.campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 21px;
+}
+
+.campo {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.campo-full {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    color: #e9e9e9;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .7px;
+}
+
+.campo label b {
+    color: var(--yellow);
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    height: 51px;
+    padding: 0 14px;
+    outline: none;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    background-color: #0b0b0b !important;
+    color: #fff !important;
+    font-size: 12px;
+    transition: border var(--transition), box-shadow var(--transition);
+    color-scheme: dark;
+}
+
+.campo input::placeholder {
+    color: #777 !important;
+    opacity: 1;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(245,196,0,.07);
+}
+
+.campo select {
+    cursor: pointer;
+}
+
+.campo select option {
+    background: #111;
+    color: #fff;
+}
+
+/* CORRIGE TEXTO DO AUTOPREENCHIMENTO DO NAVEGADOR */
+
+.campo input:-webkit-autofill,
+.campo input:-webkit-autofill:hover,
+.campo input:-webkit-autofill:focus,
+.campo input:-webkit-autofill:active {
+    -webkit-text-fill-color: #fff !important;
+    box-shadow: 0 0 0 1000px #0b0b0b inset !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* =========================================================
+   13. CAMISETA
+========================================================= */
+
+.tamanhos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tamanhos label {
+    position: relative;
+    cursor: pointer;
+}
+
+.tamanhos input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tamanhos label span {
+    width: 52px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #0b0b0b;
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+    transition: var(--transition);
+}
+
+.tamanhos label:hover span {
+    border-color: var(--yellow);
+}
+
+.tamanhos input:checked + span {
+    border-color: var(--yellow);
+    background: var(--yellow);
+    color: #080808;
+}
+
+.tamanhos input:focus-visible + span {
+    outline: 2px solid white;
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   14. PERCURSOS
+========================================================= */
+
+.percursos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.percurso {
+    position: relative;
+    cursor: pointer;
+}
+
+.percurso input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.percurso > span {
+    min-height: 105px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #0b0b0b;
+    transition: var(--transition);
+}
+
+.percurso strong {
+    color: white;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.percurso small {
+    color: var(--yellow);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.percurso:hover > span {
+    border-color: var(--yellow);
+    transform: translateY(-2px);
+}
+
+.percurso input:checked + span {
+    border-color: var(--yellow);
+    background: rgba(245,196,0,.08);
+    box-shadow: inset 0 0 0 1px rgba(245,196,0,.15);
+}
+
+.percurso input:focus-visible + span {
+    outline: 2px solid white;
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   15. TERMO DE ACEITE
+========================================================= */
+
+.termo-aceite {
+    margin: 25px 0;
+    padding: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: #0b0b0b;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+.termo-aceite input {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--yellow);
+    cursor: pointer;
+}
+
+.termo-aceite label {
+    flex: 1;
+    min-width: 180px;
+    color: #c5c5c5;
+    font-size: 10px;
+    line-height: 1.8;
+    cursor: pointer;
+}
+
+.link-termo {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.link-termo:hover {
+    color: var(--yellow-hover);
+}
+
+/* =========================================================
+   16. MODAL DO TERMO
+========================================================= */
+
+.modal-termo {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-termo[aria-hidden="false"] {
+    display: flex;
+}
+
+.modal-termo-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.9);
+    backdrop-filter: blur(6px);
+}
+
+.modal-termo-box {
+    position: relative;
+    z-index: 1;
+    width: min(760px, 100%);
+    max-height: 92vh;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    background: #111;
+    border: 1px solid rgba(245,196,0,.25);
+    border-radius: 14px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.6);
+}
+
+.fechar-termo {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: #1b1b1b;
+    color: white;
     font-size: 23px;
+    transition: var(--transition);
+}
+
+.fechar-termo:hover {
+    background: var(--yellow);
+    color: black;
+}
+
+.termo-header {
+    padding: 10px 40px 20px 0;
+}
+
+.termo-header span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.termo-header h2 {
+    margin-top: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.termo-conteudo {
+    width: 100%;
+    height: 55vh;
+    min-height: 300px;
+    overflow: hidden;
+    border-radius: 7px;
+    background: white;
+}
+
+.termo-conteudo iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    background: white;
+}
+
+.btn-fechar-termo {
+    min-height: 45px;
+    margin-top: 15px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--yellow);
+    color: #080808;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.btn-fechar-termo:hover {
+    background: var(--yellow-hover);
+}
+
+/* =========================================================
+   17. BOTÃO CONTINUAR
+========================================================= */
+
+.btn-continuar {
+    width: 100%;
+    min-height: 58px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    border-radius: 9px;
+    background: var(--yellow);
+    color: #080808;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .8px;
+    transition: var(--transition);
+}
+
+.btn-continuar:hover {
+    background: var(--yellow-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(245,196,0,.16);
+}
+
+.btn-continuar strong {
+    font-size: 24px;
     line-height: 1;
 }
 
+.btn-continuar:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================================================
+   18. MENSAGEM E SEGURANÇA
+========================================================= */
+
+.mensagem-formulario {
+    display: none;
+    margin-top: 15px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.mensagem-formulario:not(:empty) {
+    display: block;
+}
+
+.seguranca {
+    display: block;
+    margin-top: 20px;
+    color: #777;
+    font-size: 9px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* =========================================================
+   19. RESUMO DA INSCRIÇÃO
+========================================================= */
+
+.resumo {
+    position: sticky;
+    top: 20px;
+    padding: 28px;
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(245,196,0,.10),
+            transparent 45%
+        ),
+        #141414;
+    border: 1px solid rgba(245,196,0,.23);
+    border-radius: 13px;
+}
+
+.resumo-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.resumo-topo > span {
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.resumo-topo small {
+    color: var(--gray);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.resumo h3 {
+    margin: 27px 0;
+    color: white;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.resumo-linha {
+    padding: 17px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.resumo-linha span,
+.resumo-total span {
+    color: var(--gray);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.resumo-linha strong {
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.resumo-total {
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.resumo-total strong {
+    color: var(--yellow);
+    font-size: 32px;
+    font-weight: 900;
+}
+
+.resumo-seguranca {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.05);
+    border-radius: 9px;
+}
+
+.resumo-seguranca strong {
+    color: var(--yellow);
+    font-size: 23px;
+}
+
+.resumo-seguranca p {
+    color: #aaa;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   20. CTA FINAL
+========================================================= */
+
+.cta-inscricao {
+    position: relative;
+    padding: 70px 20px;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at 80% 50%,
+            rgba(245,196,0,.12),
+            transparent 55%
+        ),
+        #111;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.cta-inscricao > div {
+    position: relative;
+    z-index: 1;
+    width: min(850px, 100%);
+    margin: 0 auto;
+}
+
+.cta-inscricao span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.cta-inscricao h2 {
+    margin-top: 18px;
+    color: white;
+    font-size: clamp(25px, 5vw, 43px);
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+.cta-inscricao h2 strong {
+    color: var(--yellow);
+}
+
+/* =========================================================
+   21. FOOTER
+========================================================= */
+
+.footer {
+    padding: 60px 20px 20px;
+    background: #070707;
+    border-top: 1px solid var(--border);
+}
+
+.footer .container {
+    width: min(1150px, 100%);
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 45px;
+    padding-bottom: 45px;
+}
+
+.footer-brand img {
+    width: 125px;
+    max-height: 85px;
+    object-fit: contain;
+}
+
+.footer-brand p {
+    margin-top: 15px;
+    color: var(--gray);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.footer-instagram {
+    width: fit-content;
+    margin-top: 17px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 800;
+    transition: var(--transition);
+}
+
+.footer-instagram:hover {
+    color: var(--yellow-hover);
+    transform: translateX(3px);
+}
+
+.instagram-icon {
+    font-size: 23px;
+}
+
+.footer-instagram strong {
+    font-size: 16px;
+}
+
+.footer-column h4 {
+    margin-bottom: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.footer-info {
+    margin-bottom: 20px;
+}
+
+.footer-info > span {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--yellow);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.footer-info a,
+.footer-info p {
+    color: #aaa;
+    font-size: 11px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.footer-info a:hover {
+    color: var(--yellow);
+}
+
+.evento-destaque {
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    background: rgba(255,255,255,.04);
+    border-left: 3px solid var(--yellow);
+}
+
+.evento-destaque strong {
+    color: var(--yellow);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.evento-destaque span {
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.footer-evento > p {
+    margin-top: 15px;
+    color: var(--gray);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.footer-bottom {
+    padding-top: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-top: 1px solid var(--border);
+}
+
+.footer-bottom p {
+    color: #777;
+    font-size: 9px;
+    line-height: 1.8;
+}
+
+.footer-bottom strong {
+    color: var(--yellow);
+    font-size: 9px;
+    font-weight: 900;
+}
+
+/* =========================================================
+   22. TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .layout-inscricao {
+        grid-template-columns: 1fr;
+    }
+
+    .resumo {
+        position: relative;
+        top: auto;
+        order: -1;
+    }
+
+    .resumo h3 {
+        font-size: 28px;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+}
+
+/* =========================================================
+   23. TABLET PEQUENO
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .menu {
+        display: none;
+    }
+
+    .menu-mobile {
+        display: flex;
+    }
+
+    .countdown-bar {
+        padding: 12px 18px;
+        gap: 15px;
+    }
+
+    .countdown-bar-units {
+        gap: 13px;
+    }
+
+    .countdown-bar-unit strong {
+        font-size: 17px;
+    }
+
+    .area-inscricao {
+        padding: 65px 20px;
+    }
+
+    .bloco-form {
+        padding: 25px;
+    }
+}
+
+/* =========================================================
+   24. CELULAR
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        width: calc(100% - 30px);
+    }
+
+    /* Contagem */
+
+    .countdown-bar {
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px 8px;
+    }
+
+    .countdown-bar-label {
+        grid-column: 1 / -1;
+        justify-content: center;
+        font-size: 8px;
+        text-align: center;
+    }
+
+    .countdown-bar-units {
+        justify-content: center;
+        gap: clamp(9px, 4vw, 20px);
+    }
+
+    .countdown-bar-unit {
+        min-width: 32px;
+    }
+
+    .countdown-bar-unit strong {
+        font-size: 17px;
+    }
+
+    .countdown-bar-unit span {
+        font-size: 7px;
+    }
+
+    .countdown-bar-cta {
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 8px;
+    }
+
+    /* Hero */
+
+    .inscricao-hero {
+        padding: 48px 18px 55px;
+    }
+
+    .hero-logo {
+        margin-bottom: 10px;
+    }
+
+    .hero-logo img {
+        width: 82px;
+        height: 68px;
+    }
+
+    .hero-content-inscricao > span {
+        font-size: 9px;
+        letter-spacing: 2.5px;
+    }
+
+    .hero-content-inscricao h1 {
+        margin: 14px 0;
+        font-size: clamp(38px, 11vw, 54px);
+        letter-spacing: -1.5px;
+    }
+
+    .hero-content-inscricao h2 {
+        font-size: 15px;
+    }
+
+    .hero-content-inscricao p {
+        font-size: 11px;
+    }
+
+    .hero-pagamento {
+        max-width: 320px;
+    }
+
+    .hero-pagamento a {
+        min-height: 49px;
+    }
+
+    .hero-content-inscricao > .regulamento-link {
+        min-height: 32px;
+        padding: 5px 9px;
+    }
+
+    /* Formulário */
+
+    .area-inscricao {
+        padding: 55px 15px;
+    }
+
+    .intro-inscricao {
+        margin-bottom: 30px;
+    }
+
+    .intro-inscricao h2 {
+        font-size: 26px;
+    }
+
+    .intro-inscricao p {
+        font-size: 11px;
+    }
+
+    .bloco-form {
+        padding: 20px 16px;
+        margin-bottom: 17px;
+    }
+
+    .titulo-bloco {
+        gap: 11px;
+    }
+
+    .numero-bloco {
+        width: 40px;
+        height: 40px;
+        font-size: 13px;
+    }
+
+    .titulo-bloco h3 {
+        font-size: 12px;
+    }
+
+    .descricao-bloco {
+        font-size: 10px;
+    }
+
+    .campos {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .campo-full {
+        grid-column: auto;
+    }
+
+    .campo label {
+        font-size: 9px;
+    }
+
+    .campo input,
+    .campo select {
+        height: 48px;
+        font-size: 12px;
+    }
+
+    .percursos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .percurso > span {
+        min-height: 90px;
+        padding: 13px;
+    }
+
+    .percurso strong {
+        font-size: 20px;
+    }
+
+    .percurso small {
+        font-size: 11px;
+    }
+
+    .tamanhos {
+        gap: 9px;
+    }
+
+    .tamanhos label span {
+        width: 46px;
+        height: 44px;
+    }
+
+    .termo-aceite {
+        padding: 14px;
+    }
+
+    .termo-aceite label {
+        font-size: 9px;
+    }
+
+    .btn-continuar {
+        min-height: 53px;
+        font-size: 10px;
+    }
+
+    /* Resumo */
+
+    .resumo {
+        padding: 22px;
+    }
+
+    .resumo h3 {
+        margin: 20px 0;
+        font-size: 27px;
+    }
+
+    .resumo-linha {
+        padding: 14px 0;
+    }
+
+    .resumo-total strong {
+        font-size: 28px;
+    }
+
+    /* Modal */
+
+    .modal-termo {
+        padding: 10px;
+    }
+
+    .modal-termo-box {
+        max-height: 95vh;
+        padding: 18px;
+    }
+
+    .termo-header h2 {
+        font-size: 15px;
+    }
+
+    .termo-conteudo {
+        height: 58vh;
+        min-height: 250px;
+    }
+
+    /* CTA */
+
+    .cta-inscricao {
+        padding: 50px 18px;
+    }
+
+    .cta-inscricao h2 {
+        font-size: 27px;
+    }
+
+    /* Rodapé */
+
+    .footer {
+        padding: 45px 18px 20px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+
+    .footer-column h4 {
+        margin-bottom: 18px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* =========================================================
+   25. CELULAR PEQUENO
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .countdown-bar {
+        padding: 10px 8px;
+    }
+
+    .countdown-bar-units {
+        gap: 8px;
+    }
+
+    .countdown-bar-unit strong {
+        font-size: 15px;
+    }
+
+    .countdown-bar-cta {
+        padding: 0 9px;
+        font-size: 7px;
+    }
+
+    .hero-logo img {
+        width: 75px;
+        height: 62px;
+    }
+
+    .hero-content-inscricao h1 {
+        font-size: 36px;
+    }
+
+    .hero-content-inscricao h2 {
+        font-size: 14px;
+    }
+
+    .bloco-form {
+        padding: 17px 13px;
+    }
+
+    .titulo-bloco h3 {
+        font-size: 10px;
+    }
+
+    .numero-bloco {
+        width: 36px;
+        height: 36px;
+    }
+
+    .percursos {
+        grid-template-columns: 1fr;
+    }
+
+    .percurso > span {
+        min-height: 80px;
+    }
+
+    .resumo {
+        padding: 18px;
+    }
+
+    .resumo h3 {
+        font-size: 25px;
+    }
+
+    .cta-inscricao h2 {
+        font-size: 24px;
+    }
+
+    .footer-bottom strong {
+        font-size: 8px;
+    }
+}
+
+/* =========================================================
+   26. ACESSIBILIDADE
+========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* =========================================================
+   FIM — RUN & SAMBA 2026
+========================================================= */

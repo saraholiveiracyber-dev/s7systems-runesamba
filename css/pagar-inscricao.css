@@ -1,29 +1,39 @@
 /* =========================================================
    RUN & SAMBA 2026
    PAGAR INSCRIÇÃO
-   CSS PRINCIPAL
+   DESIGN PREMIUM • BLACK & YELLOW
+   RESPONSIVO
+========================================================= */
+
+/* =========================================================
+   01. VARIÁVEIS
 ========================================================= */
 
 :root {
-    --amarelo: #f5c400;
-    --amarelo-hover: #ffd21a;
-
     --preto: #080808;
-    --preto-2: #111111;
-    --preto-3: #181818;
+    --preto-card: #111111;
+    --preto-secundario: #171717;
+
+    --amarelo: #f5c400;
+    --amarelo-hover: #ffda35;
 
     --branco: #ffffff;
-    --cinza: #a9a9a9;
-    --cinza-2: #6f6f6f;
+    --cinza: #a5a5a5;
+    --cinza-claro: #d4d4d4;
 
-    --verde: #20c77a;
-    --vermelho: #ff5757;
+    --verde: #24c878;
+    --vermelho: #ff5252;
 
     --borda: rgba(255, 255, 255, 0.09);
-    --sombra: 0 25px 70px rgba(0, 0, 0, 0.45);
+    --borda-amarela: rgba(245, 196, 0, 0.25);
 
-    --radius: 20px;
+    --fonte: "Montserrat", sans-serif;
 }
+
+
+/* =========================================================
+   02. RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -37,17 +47,35 @@ html {
 
 body {
     min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
     background:
-        radial-gradient(circle at 50% -10%, rgba(245, 196, 0, 0.12), transparent 35%),
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(245, 196, 0, 0.075),
+            transparent 38%
+        ),
         var(--preto);
+
     color: var(--branco);
-    font-family: "Montserrat", sans-serif;
+
+    font-family: var(--fonte);
     -webkit-font-smoothing: antialiased;
+
+    overflow-x: hidden;
 }
 
 button,
-input {
-    font: inherit;
+input,
+a {
+    font-family: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -55,50 +83,79 @@ a {
     text-decoration: none;
 }
 
+button {
+    cursor: pointer;
+}
+
+
 /* =========================================================
-   HEADER
+   03. HEADER
 ========================================================= */
 
 .pagar-header {
     width: 100%;
-    border-bottom: 1px solid var(--borda);
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+
     background: rgba(8, 8, 8, 0.92);
-    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid var(--borda);
+
+    position: relative;
+    z-index: 10;
 }
 
 .pagar-header-inner {
-    width: min(1100px, calc(100% - 40px));
-    min-height: 82px;
+    width: 100%;
+    max-width: 1180px;
+
     margin: 0 auto;
+    padding: 0 25px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
 }
 
+
+/* =========================================================
+   04. LOGO
+========================================================= */
+
 .pagar-logo {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 11px;
+
+    transition: opacity 0.25s ease;
+}
+
+.pagar-logo:hover {
+    opacity: 0.8;
 }
 
 .pagar-logo img {
-    width: 48px;
-    height: 48px;
+    width: 43px;
+    height: 43px;
+
     object-fit: contain;
 }
 
 .pagar-logo-texto {
     display: flex;
     flex-direction: column;
-    line-height: 1;
+    gap: 3px;
 }
 
 .pagar-logo-texto strong {
-    font-size: 19px;
+    color: var(--branco);
+
+    font-size: 15px;
     font-weight: 900;
-    letter-spacing: -0.7px;
+
+    letter-spacing: 0.5px;
 }
 
 .pagar-logo-texto strong span {
@@ -106,287 +163,446 @@ a {
 }
 
 .pagar-logo-texto small {
-    margin-top: 5px;
     color: var(--amarelo);
-    font-size: 11px;
+
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: 4px;
+
+    letter-spacing: 3px;
 }
+
+
+/* =========================================================
+   05. LINK VOLTAR
+========================================================= */
 
 .voltar-link {
-    color: var(--cinza);
-    font-size: 13px;
-    font-weight: 700;
-    transition: 0.2s ease;
-}
-
-.voltar-link:hover {
-    color: var(--amarelo);
-}
-
-/* =========================================================
-   PÁGINA
-========================================================= */
-
-.pagar-page {
-    width: 100%;
-    min-height: calc(100vh - 82px);
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    padding: 55px 20px 45px;
-}
-
-.pagar-card {
-    width: min(680px, 100%);
-    padding: 42px;
-
-    background:
-        linear-gradient(145deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)),
-        var(--preto-2);
-
-    border: 1px solid var(--borda);
-    border-radius: 26px;
-
-    box-shadow: var(--sombra);
-}
-
-/* =========================================================
-   INTRO
-========================================================= */
-
-.pagar-intro {
-    text-align: center;
-    margin-bottom: 34px;
-}
-
-.pagar-label {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    padding: 8px 13px;
-    margin-bottom: 17px;
+    min-height: 36px;
 
-    border-radius: 999px;
-    background: rgba(245, 196, 0, 0.1);
-    border: 1px solid rgba(245, 196, 0, 0.24);
+    padding: 8px 14px;
+
+    color: var(--cinza-claro);
+
+    border: 1px solid var(--borda);
+    border-radius: 7px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    transition: all 0.25s ease;
+}
+
+.voltar-link:hover {
+    color: var(--amarelo);
+
+    border-color: var(--amarelo);
+    background: rgba(245, 196, 0, 0.05);
+}
+
+
+/* =========================================================
+   06. CONTEÚDO PRINCIPAL
+========================================================= */
+
+.pagar-page {
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 55px 20px 45px;
+}
+
+
+/* =========================================================
+   07. CARD
+========================================================= */
+
+.pagar-card {
+    width: 100%;
+    max-width: 570px;
+
+    padding: 40px 42px 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #0e0e0e 70%,
+            #121212
+        );
+
+    border: 1px solid var(--borda);
+    border-radius: 19px;
+
+    box-shadow:
+        0 25px 75px rgba(0, 0, 0, 0.48),
+        0 0 40px rgba(245, 196, 0, 0.025);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.pagar-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--amarelo),
+        transparent
+    );
+}
+
+
+/* =========================================================
+   08. INTRODUÇÃO
+========================================================= */
+
+.pagar-intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pagar-label {
+    display: inline-block;
+
+    margin-bottom: 13px;
 
     color: var(--amarelo);
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 1.6px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
 }
 
 .pagar-intro h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    line-height: 1.08;
+    color: var(--branco);
+
+    font-size: clamp(25px, 4vw, 32px);
     font-weight: 900;
-    letter-spacing: -1.5px;
+
+    line-height: 1.25;
+    letter-spacing: -1px;
+
+    margin-bottom: 12px;
 }
 
 .pagar-intro p {
-    max-width: 520px;
-    margin: 15px auto 0;
+    max-width: 410px;
+
+    margin: 0 auto;
 
     color: var(--cinza);
-    font-size: 14px;
-    line-height: 1.7;
+
+    font-size: 11px;
+    line-height: 1.9;
 }
 
+
 /* =========================================================
-   CONSULTA
+   09. FORMULÁRIO DE CONSULTA
 ========================================================= */
 
 .consulta-box {
-    padding: 25px;
-    border-radius: var(--radius);
-
-    background: var(--preto-3);
-    border: 1px solid var(--borda);
+    width: 100%;
 }
 
-.consulta-box label {
+.consulta-box > label {
     display: block;
-    margin-bottom: 9px;
 
-    color: var(--branco);
-    font-size: 11px;
+    margin-bottom: 10px;
+
+    color: var(--cinza-claro);
+
+    font-size: 10px;
     font-weight: 800;
+
     letter-spacing: 1px;
 }
 
+
+/* =========================================================
+   10. CAMPO CPF
+========================================================= */
+
 .input-wrap {
-    position: relative;
-}
-
-.input-icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 26px;
-    height: 26px;
+    width: 100%;
+    height: 54px;
 
     display: flex;
     align-items: center;
-    justify-content: center;
 
-    border-radius: 7px;
+    gap: 12px;
 
-    background: rgba(245, 196, 0, 0.1);
+    padding: 0 16px;
+
+    background: #090909;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.input-wrap:focus-within {
+    border-color: var(--amarelo);
+
+    box-shadow:
+        0 0 0 3px rgba(245, 196, 0, 0.09);
+}
+
+.input-icon {
     color: var(--amarelo);
 
-    font-size: 13px;
-    font-weight: 900;
-
-    pointer-events: none;
+    font-size: 17px;
+    font-weight: 800;
 }
 
-.consulta-box input {
+.input-wrap input {
     width: 100%;
-    height: 58px;
+    height: 100%;
 
-    padding: 0 18px 0 56px;
-
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-
+    background: transparent;
+    border: none;
     outline: none;
 
-    background: #0d0d0d;
     color: var(--branco);
+    caret-color: var(--amarelo);
 
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-size: 13px;
+    font-weight: 600;
 
-    transition: 0.2s ease;
+    letter-spacing: 1px;
 }
 
-.consulta-box input::placeholder {
-    color: #555;
+.input-wrap input::placeholder {
+    color: #666666;
+    font-weight: 500;
 }
 
-.consulta-box input:focus {
-    border-color: var(--amarelo);
-    box-shadow: 0 0 0 3px rgba(245,196,0,0.08);
+.input-wrap input:-webkit-autofill,
+.input-wrap input:-webkit-autofill:hover,
+.input-wrap input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--branco);
+    transition: background-color 9999s ease-in-out 0s;
 }
+
 
 /* =========================================================
-   BOTÕES
+   11. BOTÃO CONSULTAR
 ========================================================= */
 
-.btn-consultar,
-.btn-pagamento {
+.btn-consultar {
     width: 100%;
-    min-height: 58px;
+    min-height: 54px;
 
-    margin-top: 14px;
-    padding: 0 20px;
-
-    border: 0;
-    border-radius: 12px;
+    margin-top: 17px;
+    padding: 12px 17px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 15px;
 
-    cursor: pointer;
-
     background: var(--amarelo);
-    color: #090909;
 
-    font-size: 12px;
+    border: 1px solid var(--amarelo);
+    border-radius: 8px;
+
+    color: #080808;
+
+    font-size: 10px;
     font-weight: 900;
-    letter-spacing: 0.7px;
 
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
+    letter-spacing: 1px;
+
+    transition: all 0.25s ease;
 }
 
-.btn-consultar:hover,
-.btn-pagamento:hover {
+.btn-consultar span {
+    flex: 1;
+    text-align: center;
+}
+
+.btn-consultar strong {
+    font-size: 21px;
+}
+
+.btn-consultar:hover {
     background: var(--amarelo-hover);
+
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(245,196,0,0.18);
+
+    box-shadow:
+        0 8px 22px rgba(245, 196, 0, 0.16);
 }
 
-.btn-consultar:active,
-.btn-pagamento:active {
-    transform: translateY(0);
+.btn-consultar:active {
+    transform: scale(0.98);
 }
 
-.btn-consultar:disabled {
-    opacity: 0.65;
-    cursor: wait;
-    transform: none;
+.btn-consultar:focus-visible,
+.btn-fazer-inscricao:focus-visible,
+.btn-pagamento:focus-visible {
+    outline: 3px solid var(--branco);
+    outline-offset: 4px;
 }
 
-.btn-consultar strong,
-.btn-pagamento strong {
-    font-size: 24px;
-    line-height: 1;
-}
 
 /* =========================================================
-   MENSAGENS
+   12. MENSAGEM DO SISTEMA
 ========================================================= */
 
 .mensagem {
     display: none;
 
-    margin-top: 14px;
-    padding: 13px 15px;
+    width: 100%;
 
-    border-radius: 10px;
+    margin-top: 13px;
+    padding: 12px 14px;
 
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.5;
+    border-radius: 7px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1.7;
+    text-align: center;
+}
+
+.mensagem:not(:empty) {
+    display: block;
 }
 
 .mensagem.erro {
-    display: block;
-    background: rgba(255,87,87,0.09);
-    border: 1px solid rgba(255,87,87,0.2);
-    color: #ff8d8d;
+    color: #ff7777;
+
+    background: rgba(255, 82, 82, 0.08);
+    border: 1px solid rgba(255, 82, 82, 0.25);
 }
 
 .mensagem.sucesso {
-    display: block;
-    background: rgba(32,199,122,0.09);
-    border: 1px solid rgba(32,199,122,0.2);
-    color: #65e6aa;
+    color: #63e4a3;
+
+    background: rgba(36, 200, 120, 0.08);
+    border: 1px solid rgba(36, 200, 120, 0.25);
 }
 
+.mensagem.aviso {
+    color: var(--amarelo);
+
+    background: rgba(245, 196, 0, 0.07);
+    border: 1px solid var(--borda-amarela);
+}
+
+
 /* =========================================================
-   RESULTADO
+   13. NOVA INSCRIÇÃO
+========================================================= */
+
+.nova-inscricao {
+    margin-top: 28px;
+    padding-top: 23px;
+
+    border-top: 1px solid var(--borda);
+
+    text-align: center;
+}
+
+.nova-inscricao > span {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: var(--cinza);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.btn-fazer-inscricao {
+    width: 100%;
+    min-height: 45px;
+
+    padding: 10px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    background: transparent;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 7px;
+
+    color: var(--branco);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    transition: all 0.25s ease;
+}
+
+.btn-fazer-inscricao span {
+    flex: 1;
+    text-align: center;
+}
+
+.btn-fazer-inscricao strong {
+    color: var(--amarelo);
+    font-size: 18px;
+}
+
+.btn-fazer-inscricao:hover {
+    color: var(--amarelo);
+
+    border-color: var(--amarelo);
+    background: rgba(245, 196, 0, 0.04);
+}
+
+
+/* =========================================================
+   14. RESULTADO DA CONSULTA
 ========================================================= */
 
 .resultado {
-    margin-top: 20px;
-    padding: 25px;
+    width: 100%;
 
-    border-radius: var(--radius);
+    margin-top: 25px;
+    padding-top: 25px;
 
-    background:
-        linear-gradient(145deg, rgba(245,196,0,0.045), rgba(255,255,255,0.015)),
-        var(--preto-3);
+    border-top: 1px solid var(--borda);
 
-    border: 1px solid rgba(245,196,0,0.18);
-
-    animation: aparecer 0.35s ease both;
+    animation: aparecer 0.35s ease;
 }
 
 .resultado[hidden] {
-    display: none;
+    display: none !important;
 }
 
 @keyframes aparecer {
@@ -401,23 +617,36 @@ a {
     }
 }
 
+
+/* =========================================================
+   15. TOPO DO RESULTADO
+========================================================= */
+
 .resultado-topo {
     margin-bottom: 22px;
+    text-align: center;
 }
 
 .resultado-label {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
     color: var(--verde);
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 1.4px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
 }
 
 .resultado-topo h2 {
-    margin-top: 8px;
+    color: var(--branco);
 
-    font-size: 25px;
-    line-height: 1.2;
-    font-weight: 700;
+    font-size: 23px;
+    font-weight: 600;
+
+    margin-bottom: 9px;
 }
 
 .resultado-topo h2 strong {
@@ -426,282 +655,489 @@ a {
 }
 
 .resultado-topo p {
-    margin-top: 8px;
     color: var(--cinza);
-    font-size: 12px;
-    line-height: 1.5;
+
+    font-size: 10px;
+    line-height: 1.8;
 }
 
+
 /* =========================================================
-   DADOS
+   16. DADOS DA INSCRIÇÃO
 ========================================================= */
 
 .dados-inscricao {
+    width: 100%;
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
     gap: 10px;
+
+    margin-bottom: 18px;
 }
 
 .dado {
-    min-height: 82px;
+    min-width: 0;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 8px;
 
     padding: 15px;
 
-    border: 1px solid var(--borda);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
 
-    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
 }
 
 .dado small {
-    margin-bottom: 7px;
+    color: var(--cinza);
 
-    color: var(--cinza-2);
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: 1px;
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
 }
 
 .dado strong {
     color: var(--branco);
-    font-size: 14px;
+
+    font-size: 11px;
     font-weight: 800;
-    word-break: break-word;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
 }
 
-.destaque-valor {
-    border-color: rgba(245,196,0,0.2);
-    background: rgba(245,196,0,0.06);
-}
-
-.destaque-valor strong {
-    color: var(--amarelo);
-    font-size: 20px;
-}
 
 /* =========================================================
-   STATUS
+   17. VALOR DESTACADO
+========================================================= */
+
+.dado.destaque-valor {
+    grid-column: 1 / -1;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(245, 196, 0, 0.055);
+
+    border-color: var(--borda-amarela);
+}
+
+.dado.destaque-valor strong {
+    color: var(--amarelo);
+    font-size: 22px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   18. STATUS DO PAGAMENTO
 ========================================================= */
 
 .status-pagamento {
-    min-height: 48px;
-
-    margin-top: 14px;
-    padding: 0 15px;
-
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    border-radius: 11px;
-
-    background: rgba(245,196,0,0.07);
-    border: 1px solid rgba(245,196,0,0.14);
-
-    color: var(--amarelo);
-
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 0.4px;
-}
-
-.status-dot {
-    font-size: 14px;
-}
-
-.aviso-pagamento {
-    margin-top: 12px;
-
-    color: var(--cinza-2);
-    text-align: center;
-
-    font-size: 10px;
-    line-height: 1.5;
-}
-
-/* =========================================================
-   INFORMAÇÃO
-========================================================= */
-
-.pagar-info {
-    margin-top: 25px;
-    padding: 17px;
-
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-
-    border-radius: 13px;
-
-    background: rgba(255,255,255,0.025);
-    border: 1px solid var(--borda);
-}
-
-.info-icon {
-    flex: 0 0 31px;
-    width: 31px;
-    height: 31px;
+    width: 100%;
+    min-height: 43px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    gap: 10px;
 
-    background: rgba(32,199,122,0.1);
-    color: var(--verde);
+    margin-bottom: 17px;
+    padding: 10px 12px;
 
-    font-size: 14px;
-    font-weight: 900;
+    background: rgba(245, 196, 0, 0.07);
+
+    border: 1px solid rgba(245, 196, 0, 0.22);
+    border-radius: 7px;
 }
 
-.pagar-info strong {
-    display: block;
-    margin-bottom: 4px;
-
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.pagar-info p {
-    color: var(--cinza);
+.status-dot {
+    color: var(--amarelo);
     font-size: 10px;
-    line-height: 1.5;
 }
 
-/* =========================================================
-   RODAPÉ DO CARD
-========================================================= */
+.status-pagamento strong {
+    color: var(--amarelo);
 
-.pagar-footer {
-    margin-top: 30px;
-    padding-top: 22px;
+    font-size: 9px;
+    font-weight: 900;
 
-    border-top: 1px solid var(--borda);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-
+    letter-spacing: 0.8px;
     text-align: center;
 }
 
-.pagar-footer strong {
-    font-size: 12px;
-    font-weight: 900;
+/* Classes opcionais para o JavaScript */
+
+.status-pagamento.pago {
+    background: rgba(36, 200, 120, 0.08);
+    border-color: rgba(36, 200, 120, 0.30);
 }
 
-.pagar-footer span {
-    color: var(--cinza-2);
-    font-size: 8px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
+.status-pagamento.pago .status-dot,
+.status-pagamento.pago strong {
+    color: var(--verde);
 }
+
+.status-pagamento.cancelado {
+    background: rgba(255, 82, 82, 0.08);
+    border-color: rgba(255, 82, 82, 0.30);
+}
+
+.status-pagamento.cancelado .status-dot,
+.status-pagamento.cancelado strong {
+    color: var(--vermelho);
+}
+
 
 /* =========================================================
-   FOOTER GERAL
+   19. BOTÃO PAGAMENTO
 ========================================================= */
 
-.site-footer {
-    width: min(680px, calc(100% - 40px));
+.btn-pagamento {
+    width: 100%;
+    min-height: 55px;
 
-    margin: 0 auto 25px;
-    padding-top: 20px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 13px 18px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 15px;
+
+    background: var(--amarelo);
+
+    border: 1px solid var(--amarelo);
+    border-radius: 8px;
+
+    color: #080808;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    transition: all 0.25s ease;
+}
+
+.btn-pagamento span {
+    flex: 1;
+    text-align: center;
+}
+
+.btn-pagamento strong {
+    font-size: 22px;
+}
+
+.btn-pagamento:hover {
+    background: var(--amarelo-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(245, 196, 0, 0.17);
+}
+
+.btn-pagamento:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   20. AVISO DE SEGURANÇA
+========================================================= */
+
+.aviso-pagamento {
+    margin-top: 13px;
+
+    color: var(--cinza);
+
+    font-size: 9px;
+    line-height: 1.8;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   21. BOTÃO VOLTAR PARA CONSULTA
+========================================================= */
+
+.btn-voltar-consulta {
+    display: block;
+
+    margin: 22px auto 0;
+    padding: 9px 12px;
+
+    background: transparent;
+    border: none;
+
+    color: var(--cinza);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    transition: color 0.25s ease;
+}
+
+.btn-voltar-consulta:hover {
+    color: var(--amarelo);
+}
+
+
+/* =========================================================
+   22. INFORMAÇÃO DE AJUDA
+========================================================= */
+
+.pagar-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 28px;
+    padding: 16px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+}
+
+.info-icon {
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(36, 200, 120, 0.10);
+
+    border: 1px solid rgba(36, 200, 120, 0.25);
+    border-radius: 50%;
+
+    color: var(--verde);
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.pagar-info strong {
+    display: block;
+
+    color: var(--branco);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    margin-bottom: 5px;
+}
+
+.pagar-info p {
+    color: var(--cinza);
+
+    font-size: 9px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   23. RODAPÉ INTERNO DO CARD
+========================================================= */
+
+.pagar-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 25px;
+    padding-top: 19px;
+
+    border-top: 1px solid var(--borda);
+}
+
+.pagar-footer strong {
+    color: var(--branco);
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+.pagar-footer span {
+    color: var(--amarelo);
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   24. RODAPÉ DO SITE
+========================================================= */
+
+.site-footer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 20px 15px 0;
+
+    text-align: center;
+
+    border-top: 1px solid var(--borda);
 }
 
 .site-footer p {
-    margin: 0;
+    color: #777777;
 
-    color: #777;
+    font-size: 8px;
+    font-weight: 500;
 
-    font-size: 10px;
-    font-weight: 600;
-
-    line-height: 1.5;
+    line-height: 1.8;
 }
 
 .site-footer strong {
-    color: #ffffff;
+    color: var(--cinza-claro);
+
+    font-size: 8px;
     font-weight: 800;
+
+    letter-spacing: 0.5px;
 }
 
-@media (max-width: 600px) {
-
-    .site-footer {
-        width: calc(100% - 28px);
-
-        flex-direction: column;
-        text-align: center;
-
-        gap: 8px;
-    }
-
-}
 
 /* =========================================================
-   RESPONSIVO
+   25. RESPONSIVIDADE — TABLETS
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+
+    .pagar-header {
+        height: 68px;
+    }
 
     .pagar-header-inner {
-        width: min(100% - 28px, 1100px);
-        min-height: 70px;
-    }
-
-    .pagar-logo img {
-        width: 42px;
-        height: 42px;
-    }
-
-    .pagar-logo-texto strong {
-        font-size: 16px;
-    }
-
-    .voltar-link {
-        font-size: 11px;
+        padding: 0 20px;
     }
 
     .pagar-page {
-        padding: 25px 13px 30px;
+        padding: 40px 18px;
     }
 
     .pagar-card {
-        padding: 25px 16px;
-        border-radius: 20px;
+        max-width: 540px;
+        padding: 35px 30px 23px;
+    }
+
+}
+
+
+/* =========================================================
+   26. RESPONSIVIDADE — CELULARES
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .pagar-header {
+        height: 64px;
+    }
+
+    .pagar-header-inner {
+        padding: 0 15px;
+    }
+
+    .pagar-logo img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .pagar-logo-texto strong {
+        font-size: 13px;
+    }
+
+    .voltar-link {
+        min-height: 33px;
+        padding: 7px 11px;
+
+        font-size: 9px;
+    }
+
+    .pagar-page {
+        padding: 25px 12px 30px;
+    }
+
+    .pagar-card {
+        padding: 29px 19px 21px;
+        border-radius: 15px;
     }
 
     .pagar-intro {
         margin-bottom: 25px;
     }
 
+    .pagar-label {
+        font-size: 8px;
+        letter-spacing: 2px;
+    }
+
     .pagar-intro h1 {
-        font-size: 29px;
+        font-size: 25px;
     }
 
     .pagar-intro p {
+        font-size: 10px;
+    }
+
+    .input-wrap {
+        height: 51px;
+        padding: 0 13px;
+    }
+
+    .input-wrap input {
         font-size: 12px;
     }
 
-    .consulta-box {
-        padding: 17px;
+    .btn-consultar {
+        min-height: 51px;
+        font-size: 9px;
+    }
+
+    .nova-inscricao {
+        margin-top: 24px;
+        padding-top: 20px;
+    }
+
+    .btn-fazer-inscricao {
+        min-height: 43px;
+        font-size: 8px;
     }
 
     .resultado {
-        padding: 17px;
+        margin-top: 21px;
+        padding-top: 21px;
     }
 
     .resultado-topo h2 {
@@ -709,131 +1145,109 @@ a {
     }
 
     .dados-inscricao {
-        grid-template-columns: 1fr;
+        gap: 8px;
     }
 
     .dado {
-        min-height: 70px;
+        padding: 12px;
     }
 
-    .btn-consultar,
-    .btn-pagamento {
-        min-height: 55px;
+    .dado small {
+        font-size: 7px;
+    }
+
+    .dado strong {
         font-size: 10px;
     }
+
+    .dado.destaque-valor strong {
+        font-size: 20px;
+    }
+
+    .status-pagamento strong {
+        font-size: 8px;
+    }
+
+    .btn-pagamento {
+        min-height: 52px;
+        font-size: 9px;
+    }
+
+    .pagar-info {
+        margin-top: 23px;
+        padding: 13px;
+    }
+
+    .pagar-footer {
+        margin-top: 21px;
+    }
+
+    .site-footer {
+        padding-top: 17px;
+    }
+
 }
 
-@media (max-width: 360px) {
 
-    .pagar-logo-texto {
-        display: none;
-    }
+/* =========================================================
+   27. CELULARES PEQUENOS
+========================================================= */
+
+@media (max-width: 350px) {
 
     .pagar-card {
-        padding: 21px 13px;
+        padding: 25px 14px 19px;
     }
 
-    .consulta-box,
-    .resultado {
-        padding: 14px;
+    .pagar-intro h1 {
+        font-size: 22px;
     }
-}
-/* =========================================================
-   NOVA INSCRIÇÃO
-========================================================= */
 
-.nova-inscricao {
-    margin-top: 22px;
-    padding-top: 20px;
+    .pagar-header-inner {
+        padding: 0 11px;
+    }
 
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .pagar-logo {
+        gap: 7px;
+    }
 
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    .pagar-logo img {
+        width: 31px;
+        height: 31px;
+    }
 
-    text-align: center;
-}
+    .pagar-logo-texto strong {
+        font-size: 11px;
+    }
 
-.nova-inscricao > span {
-    color: #8f8f8f;
+    .dados-inscricao {
+        grid-template-columns: 1fr;
+    }
 
-    font-size: 10px;
-    font-weight: 800;
+    .dado.destaque-valor {
+        grid-column: auto;
+    }
 
-    letter-spacing: 1px;
-}
+    .site-footer strong {
+        font-size: 7px;
+    }
 
-.btn-fazer-inscricao {
-    width: 100%;
-    min-height: 52px;
-
-    padding: 0 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border: 1px solid rgba(245, 196, 0, 0.35);
-    border-radius: 11px;
-
-    background: rgba(245, 196, 0, 0.06);
-
-    color: #f5c400;
-
-    font-size: 11px;
-    font-weight: 900;
-
-    letter-spacing: 0.7px;
-
-    text-decoration: none;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.btn-fazer-inscricao strong {
-    font-size: 20px;
-}
-
-.btn-fazer-inscricao:hover {
-    background: rgba(245, 196, 0, 0.12);
-
-    border-color: #f5c400;
-
-    transform: translateY(-2px);
 }
 
 
 /* =========================================================
-   VOLTAR / NOVA CONSULTA
+   28. ACESSIBILIDADE
 ========================================================= */
 
-.btn-voltar-consulta {
-    width: 100%;
+@media (prefers-reduced-motion: reduce) {
 
-    margin-top: 15px;
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 
-    padding: 12px;
-
-    background: transparent;
-
-    border: 0;
-
-    color: #8f8f8f;
-
-    font-size: 10px;
-    font-weight: 800;
-
-    letter-spacing: 0.8px;
-
-    cursor: pointer;
-
-    transition: color 0.2s ease;
-}
-
-.btn-voltar-consulta:hover {
-    color: #f5c400;
 }

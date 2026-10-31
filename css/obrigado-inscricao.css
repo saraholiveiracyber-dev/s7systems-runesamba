@@ -1,12 +1,27 @@
 /* =========================================================
    RUN & SAMBA 2026
-   PÁGINA DE INSCRIÇÃO REALIZADA
-   ========================================================= */
+   PÁGINA DE CONFIRMAÇÃO DE INSCRIÇÃO
+   CSS COMPLETO • PREMIUM • RESPONSIVO
+========================================================= */
 
+/* =========================
+   RESET E CONFIGURAÇÕES
+========================= */
 
-/* =========================================================
-   RESET
-   ========================================================= */
+:root {
+    --preto: #080808;
+    --preto-card: #111111;
+    --preto-secundario: #171717;
+    --amarelo: #f5c400;
+    --amarelo-hover: #ffda35;
+    --branco: #ffffff;
+    --cinza: #a5a5a5;
+    --cinza-claro: #d0d0d0;
+    --borda: rgba(255, 255, 255, 0.09);
+    --verde: #24c878;
+
+    --fonte: "Montserrat", sans-serif;
+}
 
 * {
     margin: 0;
@@ -14,811 +29,806 @@
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
 
-
 body {
-    font-family: "Montserrat", sans-serif;
-    background: #f5f5f5;
-    color: #111;
-}
-
-
-/* =========================================================
-   PÁGINA
-   ========================================================= */
-
-.obrigado-page {
     min-height: 100vh;
-    min-height: 100svh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 50px 20px;
-
     background:
         radial-gradient(
-            circle at top,
-            rgba(255, 193, 7, 0.12),
+            circle at 50% 0%,
+            rgba(245, 196, 0, 0.09),
             transparent 35%
         ),
-        #f4f4f4;
+        var(--preto);
+
+    color: var(--branco);
+    font-family: var(--fonte);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 
-/* =========================================================
+/* =========================
+   PÁGINA PRINCIPAL
+========================= */
+
+.obrigado-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px 20px;
+
+    position: relative;
+}
+
+
+/* =========================
    CARD PRINCIPAL
-   ========================================================= */
+========================= */
 
 .obrigado-card {
     width: 100%;
-    max-width: 780px;
+    max-width: 650px;
 
-    background: #fff;
+    padding: 42px 48px 30px;
 
-    padding: 50px 55px;
+    background:
+        linear-gradient(
+            145deg,
+            #151515 0%,
+            #0d0d0d 65%,
+            #111111 100%
+        );
 
-    border-radius: 24px;
+    border: 1px solid var(--borda);
+    border-radius: 22px;
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.10);
+        0 25px 80px rgba(0, 0, 0, 0.55),
+        0 0 45px rgba(245, 196, 0, 0.035);
+
+    position: relative;
+    overflow: hidden;
 
     text-align: center;
+}
 
-    border: 1px solid rgba(0, 0, 0, 0.06);
+/* Detalhe superior amarelo */
+
+.obrigado-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--amarelo),
+        transparent
+    );
 }
 
 
-/* =========================================================
+/* =========================
    LOGO
-   ========================================================= */
+========================= */
 
 .obrigado-logo-area {
+    width: 100%;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     margin-bottom: 25px;
 }
 
-
 .obrigado-logo {
-    width: 150px;
-    max-width: 60%;
+    display: block;
+
+    width: 115px;
+    max-width: 40%;
     height: auto;
+    max-height: 105px;
 
     object-fit: contain;
+
+    filter: drop-shadow(
+        0 5px 15px rgba(245, 196, 0, 0.12)
+    );
 }
 
 
-/* =========================================================
-   ÍCONE SUCESSO
-   ========================================================= */
+/* =========================
+   ÍCONE DE SUCESSO
+========================= */
 
 .sucesso-icon {
-    width: 72px;
-    height: 72px;
+    width: 62px;
+    height: 62px;
 
-    margin: 0 auto 24px;
+    margin: 0 auto 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: #f5c400;
+    background: rgba(36, 200, 120, 0.10);
 
-    color: #111;
-
+    border: 1px solid rgba(36, 200, 120, 0.45);
     border-radius: 50%;
 
-    font-size: 38px;
-    font-weight: 900;
+    color: var(--verde);
+
+    font-size: 31px;
+    font-weight: 800;
 
     box-shadow:
-        0 10px 25px rgba(245, 196, 0, 0.30);
+        0 0 25px rgba(36, 200, 120, 0.08);
 }
 
 
-/* =========================================================
-   LABEL
-   ========================================================= */
+/* =========================
+   IDENTIFICAÇÃO
+========================= */
 
 .obrigado-label {
-    display: block;
+    display: inline-block;
 
-    margin-bottom: 12px;
+    color: var(--amarelo);
 
-    color: #777;
-
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    margin-bottom: 13px;
 }
 
 
-/* =========================================================
+/* =========================
    TÍTULO
-   ========================================================= */
+========================= */
 
 .obrigado-card h1 {
-    font-size: clamp(32px, 6vw, 52px);
+    color: var(--branco);
 
-    line-height: 0.98;
+    font-size: clamp(27px, 5vw, 37px);
+    font-weight: 600;
 
-    font-weight: 900;
-
+    line-height: 1.25;
     letter-spacing: -1.5px;
-
-    color: #111;
 }
-
 
 .obrigado-card h1 strong {
-    color: #e5b800;
+    color: var(--amarelo);
+    font-weight: 900;
 }
 
 
-/* =========================================================
+/* =========================
    LINHA AMARELA
-   ========================================================= */
+========================= */
 
 .linha-amarela {
-    width: 65px;
-    height: 5px;
+    width: 55px;
+    height: 3px;
 
-    margin: 25px auto;
+    margin: 22px auto 23px;
 
-    background: #f5c400;
-
-    border-radius: 20px;
+    background: var(--amarelo);
+    border-radius: 10px;
 }
 
 
-/* =========================================================
+/* =========================
    TEXTOS
-   ========================================================= */
+========================= */
 
 .obrigado-principal {
-    font-size: 18px;
-    line-height: 1.6;
+    max-width: 470px;
 
-    color: #222;
+    margin: 0 auto 12px;
 
-    margin-bottom: 8px;
+    color: var(--branco);
+
+    font-size: 14px;
+    font-weight: 500;
+
+    line-height: 1.8;
 }
-
 
 .obrigado-principal strong {
+    color: var(--amarelo);
     font-weight: 800;
 }
-
 
 .obrigado-texto {
-    max-width: 600px;
+    max-width: 465px;
 
-    margin: 0 auto 30px;
+    margin: 0 auto 28px;
 
-    color: #666;
+    color: var(--cinza);
 
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.9;
 }
-
 
 .obrigado-texto strong {
-    color: #222;
-    font-weight: 800;
+    color: var(--cinza-claro);
+    font-weight: 700;
 }
 
 
-/* =========================================================
-   AVISO
-   ========================================================= */
+/* =========================
+   AVISO DE PAGAMENTO
+========================= */
 
 .obrigado-destaque {
     width: 100%;
 
-    padding: 25px;
+    padding: 20px;
 
-    margin-bottom: 35px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fffdf1,
-            #fff8cf
-        );
-
-    border: 1px solid rgba(245, 196, 0, 0.45);
-
-    border-left: 5px solid #f5c400;
-
-    border-radius: 15px;
+    margin-bottom: 28px;
 
     text-align: left;
+
+    background: rgba(245, 196, 0, 0.045);
+
+    border: 1px solid rgba(245, 196, 0, 0.20);
+    border-radius: 13px;
 }
 
+
+/* Título do aviso */
 
 .destaque-titulo {
     display: flex;
+    align-items: center;
+    gap: 9px;
 
+    color: var(--amarelo);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+    line-height: 1.5;
+
+    margin-bottom: 12px;
+}
+
+.destaque-titulo span {
+    width: 23px;
+    height: 23px;
+
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    gap: 10px;
+    flex-shrink: 0;
 
-    margin-bottom: 20px;
-
-    color: #111;
+    background: rgba(245, 196, 0, 0.12);
+    border-radius: 50%;
 
     font-size: 13px;
-    font-weight: 900;
-
-    letter-spacing: 0.5px;
-
-    text-align: center;
 }
-
-
-.destaque-titulo span {
-    color: #d29f00;
-}
-
 
 .obrigado-destaque > p {
-    color: #444;
+    color: var(--cinza-claro);
 
-    font-size: 14px;
-
-    line-height: 1.7;
-
-    text-align: center;
+    font-size: 11px;
+    line-height: 1.8;
 }
 
+
+/* Regra importante */
 
 .destaque-regra {
-    margin-top: 20px;
+    margin-top: 16px;
+    padding-top: 15px;
 
-    padding: 18px;
-
-    background: rgba(255, 255, 255, 0.70);
-
-    border-radius: 10px;
+    border-top: 1px solid rgba(245, 196, 0, 0.15);
 }
-
 
 .destaque-regra > strong {
     display: block;
 
-    margin-bottom: 8px;
+    color: var(--amarelo);
 
-    color: #b88600;
+    font-size: 9px;
+    font-weight: 900;
 
-    font-size: 12px;
+    letter-spacing: 1.5px;
 
-    letter-spacing: 1px;
+    margin-bottom: 9px;
 }
-
 
 .destaque-regra p {
-    margin-top: 8px;
+    color: var(--cinza);
 
-    color: #444;
+    font-size: 10px;
+    line-height: 1.8;
 
-    font-size: 13px;
-
-    line-height: 1.65;
+    margin-bottom: 7px;
 }
 
 
-.destaque-regra strong {
-    font-weight: 800;
-}
-
-
-/* =========================================================
-   VALOR
-   ========================================================= */
+/* =========================
+   VALOR DA INSCRIÇÃO
+========================= */
 
 .valor-inscricao {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 15px;
 
-    margin-top: 20px;
+    margin-top: 17px;
+    padding: 15px 17px;
 
-    padding-top: 18px;
+    background: rgba(0, 0, 0, 0.30);
 
-    border-top: 1px solid rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(245, 196, 0, 0.18);
+    border-radius: 9px;
 }
 
-
 .valor-inscricao span {
-    color: #666;
+    color: var(--cinza-claro);
 
-    font-size: 11px;
-
-    font-weight: 800;
+    font-size: 9px;
+    font-weight: 700;
 
     letter-spacing: 1px;
 }
 
-
 .valor-inscricao strong {
-    color: #111;
+    color: var(--amarelo);
 
-    font-size: 24px;
-
+    font-size: 23px;
     font-weight: 900;
 }
 
 
-/* =========================================================
-   PAGAMENTO
-   ========================================================= */
+/* =========================
+   ÁREA DE PAGAMENTO
+========================= */
 
 .pagamento {
-    padding: 30px 25px;
+    width: 100%;
 
-    margin-bottom: 30px;
+    margin: 0 auto 28px;
 
-    background: #111;
-
-    border-radius: 18px;
-
-    color: #fff;
+    text-align: center;
 }
-
 
 .pagamento-label {
     display: block;
 
-    margin-bottom: 8px;
+    color: var(--amarelo);
 
-    color: #f5c400;
-
-    font-size: 11px;
-
+    font-size: 9px;
     font-weight: 800;
 
     letter-spacing: 2px;
-}
 
+    margin-bottom: 9px;
+}
 
 .pagamento h2 {
-    margin-bottom: 10px;
+    color: var(--branco);
 
-    font-size: 27px;
-
-    font-weight: 900;
+    font-size: 21px;
+    font-weight: 800;
 
     letter-spacing: -0.5px;
-}
 
+    margin-bottom: 9px;
+}
 
 .pagamento p {
-    max-width: 520px;
+    max-width: 420px;
 
-    margin: 0 auto 24px;
+    margin: 0 auto 19px;
 
-    color: #bbb;
+    color: var(--cinza);
 
-    font-size: 13px;
-
-    line-height: 1.7;
+    font-size: 11px;
+    line-height: 1.8;
 }
 
 
-/* =========================================================
+/* =========================
    BOTÃO PAGAMENTO
-   ========================================================= */
+========================= */
 
 .btn-pagamento {
-    min-height: 58px;
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 25px;
-
-    padding: 0 28px;
-
-    background: #f5c400;
-
-    color: #111;
-
-    border-radius: 10px;
-
-    text-decoration: none;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
-    letter-spacing: 0.5px;
-
-    transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-
-.btn-pagamento strong {
-    font-size: 21px;
-
-    transition:
-        transform 0.25s ease;
-}
-
-
-.btn-pagamento:hover {
-    background: #ffd21a;
-
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 12px 30px rgba(245, 196, 0, 0.25);
-}
-
-
-.btn-pagamento:hover strong {
-    transform: translateX(5px);
-}
-
-
-/* =========================================================
-   INFORMAÇÕES DO EVENTO
-   ========================================================= */
-
-.evento-info {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 12px;
-
-    margin-bottom: 35px;
-}
-
-
-.info-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 15px;
-
-    background: #f7f7f7;
-
-    border-radius: 12px;
-
-    text-align: left;
-}
-
-
-.info-item > span {
-    width: 35px;
-    height: 35px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #fff1a8;
-
-    border-radius: 9px;
-
-    font-size: 16px;
-}
-
-
-.info-item small {
-    display: block;
-
-    margin-bottom: 4px;
-
-    color: #888;
-
-    font-size: 9px;
-
-    font-weight: 800;
-
-    letter-spacing: 0.8px;
-}
-
-
-.info-item strong {
-    display: block;
-
-    color: #222;
-
-    font-size: 10px;
-
-    font-weight: 800;
-
-    line-height: 1.3;
-}
-
-
-/* =========================================================
-   LINHA FINAL
-========================================================= */
-
-.footer-bottom {
     width: 100%;
+    max-width: 390px;
 
-    margin-top: 25px;
-    padding-top: 20px;
+    min-height: 55px;
 
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 0 auto;
+
+    padding: 13px 20px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+
+    gap: 15px;
+
+    background: var(--amarelo);
+
+    border: 1px solid var(--amarelo);
+    border-radius: 9px;
+
+    color: #080808;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.footer-bottom p {
-    margin: 0;
+.btn-pagamento span {
+    flex: 1;
+    text-align: center;
+}
 
-    color: #777;
+.btn-pagamento strong {
+    font-size: 22px;
+    font-weight: 800;
+}
 
-    font-size: 10px;
-    font-weight: 600;
+.btn-pagamento:hover {
+    background: var(--amarelo-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 25px rgba(245, 196, 0, 0.20);
+}
+
+.btn-pagamento:active {
+    transform: scale(0.98);
+}
+
+.btn-pagamento:focus-visible {
+    outline: 3px solid var(--branco);
+    outline-offset: 4px;
+}
+
+
+/* =========================
+   INFORMAÇÕES DO EVENTO
+========================= */
+
+.evento-info {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    padding: 21px 0;
+
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+}
+
+.info-item {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 5px;
+}
+
+.info-item > span {
+    font-size: 19px;
+}
+
+.info-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-item small {
+    color: var(--cinza);
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.info-item strong {
+    color: var(--branco);
+
+    font-size: 9px;
+    font-weight: 800;
 
     line-height: 1.5;
 }
 
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.footer-bottom {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 9px;
+
+    padding-top: 22px;
+}
+
+.footer-bottom p {
+    color: #777777;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    line-height: 1.7;
+    text-align: center;
+}
+
 .footer-bottom strong {
-    color: #000000;
+    display: inline-block;
+
+    color: var(--cinza-claro);
+
+    font-size: 8px;
     font-weight: 800;
+
+    letter-spacing: 0.7px;
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* =========================
+   RESPONSIVIDADE
+   TABLETS
+========================= */
 
-@media (max-width: 600px) {
-
-    .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-        gap: 8px;
-    }
-
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 
     .obrigado-page {
-        padding: 25px 15px;
+        padding: 35px 16px;
     }
-
 
     .obrigado-card {
-        padding: 40px 25px;
-
-        border-radius: 20px;
+        max-width: 580px;
+        padding: 35px 30px 26px;
     }
 
-
-    .evento-info {
-        grid-template-columns: 1fr;
-    }
-
-
-    .info-item {
-        padding: 13px 15px;
+    .obrigado-logo {
+        width: 105px;
     }
 
 }
 
 
-/* =========================================================
-   CELULAR
-   ========================================================= */
+/* =========================
+   RESPONSIVIDADE
+   CELULARES
+========================= */
 
 @media (max-width: 480px) {
 
     .obrigado-page {
-        padding: 15px 10px;
+        min-height: 100vh;
+
+        padding: 20px 12px;
+
+        align-items: flex-start;
     }
 
-
     .obrigado-card {
-        padding: 30px 18px;
+        width: 100%;
+
+        padding: 28px 19px 22px;
 
         border-radius: 17px;
     }
 
+    .obrigado-logo-area {
+        margin-bottom: 19px;
+    }
 
     .obrigado-logo {
-        width: 125px;
+        width: 90px;
+        max-height: 85px;
     }
-
 
     .sucesso-icon {
-        width: 62px;
-        height: 62px;
+        width: 54px;
+        height: 54px;
 
-        font-size: 32px;
+        margin-bottom: 17px;
 
-        margin-bottom: 20px;
+        font-size: 27px;
     }
-
 
     .obrigado-label {
-        font-size: 10px;
-
-        letter-spacing: 1.5px;
+        font-size: 9px;
+        letter-spacing: 2px;
     }
-
 
     .obrigado-card h1 {
-        font-size: 34px;
+        font-size: 27px;
+        letter-spacing: -1px;
     }
-
 
     .linha-amarela {
-        width: 50px;
-        height: 4px;
-
-        margin: 20px auto;
+        margin: 18px auto;
     }
-
 
     .obrigado-principal {
-        font-size: 16px;
+        font-size: 12px;
+        line-height: 1.8;
     }
-
 
     .obrigado-texto {
-        font-size: 13px;
+        font-size: 10px;
+        margin-bottom: 23px;
     }
-
 
     .obrigado-destaque {
-        padding: 18px 15px;
-
-        border-left-width: 4px;
+        padding: 15px;
+        margin-bottom: 24px;
     }
-
 
     .destaque-titulo {
-        font-size: 10px;
-
-        gap: 6px;
+        font-size: 9px;
+        letter-spacing: 0.5px;
     }
 
-
-    .obrigado-destaque > p {
-        font-size: 12px;
-    }
-
-
-    .destaque-regra {
-        padding: 14px;
-    }
-
-
+    .obrigado-destaque > p,
     .destaque-regra p {
-        font-size: 11px;
+        font-size: 10px;
     }
-
 
     .valor-inscricao {
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 6px;
-
-        text-align: center;
+        padding: 13px;
     }
 
+    .valor-inscricao span {
+        font-size: 8px;
+    }
 
     .valor-inscricao strong {
-        font-size: 22px;
+        font-size: 21px;
     }
-
-
-    .pagamento {
-        padding: 25px 16px;
-
-        border-radius: 15px;
-    }
-
 
     .pagamento h2 {
-        font-size: 23px;
+        font-size: 19px;
     }
-
 
     .pagamento p {
-        font-size: 12px;
+        font-size: 10px;
     }
-
 
     .btn-pagamento {
-        width: 100%;
+        min-height: 53px;
+        padding: 12px 15px;
 
-        min-height: 55px;
-
-        padding: 0 15px;
-
-        gap: 15px;
-
-        font-size: 11px;
+        font-size: 10px;
     }
 
-
     .evento-info {
+        gap: 5px;
+        padding: 17px 0;
+    }
+
+    .info-item {
+        gap: 7px;
+        padding: 3px;
+    }
+
+    .info-item > span {
+        font-size: 17px;
+    }
+
+    .info-item small {
+        font-size: 7px;
+        letter-spacing: 1px;
+    }
+
+    .info-item strong {
+        font-size: 8px;
+    }
+
+    .footer-bottom {
+        padding-top: 18px;
         gap: 8px;
     }
 
-
-    .info-item {
-        padding: 12px;
+    .footer-bottom p {
+        font-size: 8px;
     }
 
-
-    .obrigado-footer p {
-        font-size: 11px;
+    .footer-bottom strong {
+        font-size: 7px;
     }
 
 }
 
 
-/* =========================================================
-   TELAS MUITO PEQUENAS
-   ========================================================= */
+/* =========================
+   CELULARES PEQUENOS
+========================= */
 
 @media (max-width: 350px) {
 
     .obrigado-card {
-        padding: 25px 14px;
+        padding: 24px 14px 20px;
     }
-
 
     .obrigado-card h1 {
-        font-size: 29px;
+        font-size: 24px;
     }
 
-
-    .sucesso-icon {
-        width: 55px;
-        height: 55px;
-
-        font-size: 28px;
+    .evento-info {
+        grid-template-columns: 1fr;
+        gap: 13px;
     }
 
+    .info-item {
+        flex-direction: row;
+        justify-content: center;
+        text-align: left;
+    }
 
-    .btn-pagamento {
-        font-size: 10px;
+    .info-item div {
+        min-width: 120px;
+    }
+
+    .valor-inscricao {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
     }
 
 }
