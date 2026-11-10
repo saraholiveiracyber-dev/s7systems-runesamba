@@ -256,7 +256,10 @@ document.addEventListener("DOMContentLoaded", () => {
             inscricao.status_pagamento
         );
 
-        const estaPago = status === "PAGO";
+       const estaPago = [
+    "PAGO",
+    "PAGO_PARCEIRO"
+].includes(status);
 
         const eCortesia = [
             "CORTESIA",
@@ -356,7 +359,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (resultadoValor) {
             resultadoValor.textContent =
-                eCortesia ? "CORTESIA" : "R$ 89,90";
+    eCortesia
+        ? "CORTESIA"
+        : status === "PAGO_PARCEIRO"
+            ? "R$ 60,00"
+            : "R$ 89,90";
         }
 
 
