@@ -11,9 +11,6 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_Yt-DyfGqRqfbPN6aPgLM5w_K2RIneDd";
 
-const IZY_PAYMENT_URL =
-    "https://eventos.izypass.com.br/share/run-and-samba-2-edicao_luziania_20-11-2026";
-
 
 /* =========================================================
    CONEXÃO SUPABASE
@@ -399,20 +396,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /* Botão de pagamento */
+        /* BOTÃO DE PAGAMENTO VIA WHATSAPP */
 
-        if (btnPagamento) {
+if (btnPagamento) {
 
-            const podePagar =
-                estaPendente;
+    const mensagemWhatsApp =
+`Olá! Tudo bem?
 
-            btnPagamento.href = IZY_PAYMENT_URL;
-            btnPagamento.target = "_blank";
-            btnPagamento.rel = "noopener noreferrer";
+Gostaria de dar continuidade à confirmação da minha inscrição.
 
-            btnPagamento.style.display =
-                podePagar ? "flex" : "none";
-        }
+*DADOS DA INSCRIÇÃO*
+
+Participante: ${inscricao.nome || "Não informado"}
+Percurso: ${inscricao.percurso || "Não informado"}
+CPF: ${formatarCPF(inscricao.cpf || cpf.value)}
+
+Gostaria de realizar o pagamento da minha inscrição.`;
+
+    btnPagamento.href =
+        "https://wa.me/5562992104211?text=" +
+        encodeURIComponent(mensagemWhatsApp);
+
+    btnPagamento.target = "_blank";
+
+    btnPagamento.rel = "noopener noreferrer";
+
+    btnPagamento.style.display =
+        estaPendente ? "flex" : "none";
+}
 
 
         /* Exibir resultado */

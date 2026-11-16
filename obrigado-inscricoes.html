@@ -167,7 +167,7 @@
                         </span>
 
                         <strong id="valorInscricao">
-                            R$ —
+                            R$ 89,90
                         </strong>
 
                     </div>
@@ -195,8 +195,8 @@
 
 
                 <p>
-                    Clique no botão abaixo para acessar a página
-                    de pagamento e concluir sua inscrição.
+                    Clique no botão abaixo para fazer o pagamento da sua inscrição.
+                    Você será direcionado para o WhatsApp da organização, que irá auxiliá-lo(a) no processo de pagamento.
                 </p>
 
 
@@ -327,42 +327,43 @@
 
     <script>
 
-        /*
-         * Recupera o valor salvo durante a inscrição.
-         */
+// WhatsApp da organização
+const WHATSAPP_URL = "https://wa.me/5562992104211";
 
-        const valorInscricao =
-            document.getElementById("valorInscricao");
+// Botão de pagamento
+const btnPagamento = document.getElementById("btnPagamento");
 
-        const valorSalvo =
-            localStorage.getItem("valorInscricao");
+// Recupera os dados salvos durante a inscrição
+const nome = localStorage.getItem("nomeInscricao");
+const percurso = localStorage.getItem("percursoInscricao");
+const cpf = localStorage.getItem("cpfInscricao");
 
+// Mensagem automática
+const mensagemWhatsApp =
+`Olá! Tudo bem? 😊
 
-        if (valorSalvo) {
+Acabei de realizar minha inscrição na Run & Samba 2026 e gostaria de dar continuidade à confirmação.
 
-            valorInscricao.textContent =
-                valorSalvo;
+*DADOS DA INSCRIÇÃO*
 
-        }
+Participante: ${nome || "Não informado"}
+Percurso: ${percurso || "Não informado"}
+CPF: ${cpf || "Não informado"}
 
+Gostaria de realizar o pagamento da minha inscrição.
 
-        /*
-         * Link de pagamento.
-         *
-         * Substitua o endereço abaixo pelo seu
-         * link oficial de pagamento da Izy.
-         */
+Poderia me orientar sobre como proceder?`;
 
-        const btnPagamento =
-            document.getElementById("btnPagamento");
+// Configura o botão
+if (btnPagamento) {
+    btnPagamento.href =
+        WHATSAPP_URL + "?text=" + encodeURIComponent(mensagemWhatsApp);
 
+    btnPagamento.target = "_blank";
+    btnPagamento.rel = "noopener noreferrer";
+}
 
-        btnPagamento.href =
-            "https://eventos.izypass.com.br/share/run-and-samba-2-edicao_luziania_20-11-2026";
-
-
-    </script>
-
+</script>
 
 </body>
 
