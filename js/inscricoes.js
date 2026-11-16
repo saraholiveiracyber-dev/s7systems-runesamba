@@ -18,8 +18,10 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_Yt-DyfGqRqfbPN6aPgLM5w_K2RIneDd";
 
-const IZY_PAYMENT_URL =
-    "https://eventos.izypass.com.br/share/run-and-samba-2-edicao_luziania_20-11-2026";
+localStorage.setItem(
+    "izyPaymentUrl",
+    IZY_PAYMENT_URL
+);
 
 const CHAVE_EMBAIXADOR =
     "runSambaCodigoEmbaixador";
@@ -1538,10 +1540,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log(
                     "Redirecionando para confirmação..."
                 );
+const mensagemWhatsApp = [
+    "Olá! Acabei de realizar minha inscrição na RUN & SAMBA — 2ª EDIÇÃO.",
+    "",
+    `Participante: ${nome.value.trim()}`,
+    `Percurso: ${percurso.value}`,
+    `Valor: ${formatarValor(valor)}`,
+    `Telefone: ${telefone.value.trim()}`,
+    "",
+    "Gostaria de receber as orientações para finalizar o pagamento.",
+    "",
+    "Evento: 20 de novembro de 2026",
+    "Local: Luziânia - GO"
+].join("\n");
 
-                window.location.href =
-                    "obrigado-inscricoes.html";
+const linkWhatsApp =
+    `https://wa.me/5562992104211?text=${encodeURIComponent(mensagemWhatsApp)}`;
 
+window.location.href = linkWhatsApp;
             }
 
 
