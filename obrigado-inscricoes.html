@@ -177,39 +177,49 @@
             </div>
 
 
-           
-<div class="pagamento">
+            <!-- =================================================
+                 PAGAMENTO
+            ================================================== -->
 
-    <span class="pagamento-label">
-        PRÓXIMA ETAPA
-    </span>
+            <div class="pagamento">
 
-    <h2>
-        Finalize seu pagamento pelo WhatsApp
-    </h2>
 
-    <p>
-        Clique no botão abaixo para falar diretamente com nossa equipe
-        e receber as orientações para concluir o pagamento da sua inscrição.
-    </p>
+                <span class="pagamento-label">
+                    PRÓXIMA ETAPA
+                </span>
 
-    <a
-        href="#"
-        class="btn-pagamento"
-        id="btnPagamento"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        <span>
-            FINALIZAR PELO WHATSAPP
-        </span>
 
-        <strong>
-            →
-        </strong>
-    </a>
+                <h2>
+                    Finalize seu pagamento
+                </h2>
 
-</div>
+
+                <p>
+                    Clique no botão abaixo para acessar a página
+                    de pagamento e concluir sua inscrição.
+                </p>
+
+
+                <a
+                    href="#"
+                    class="btn-pagamento"
+                    id="btnPagamento"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <span>
+                        PAGAR MINHA INSCRIÇÃO
+                    </span>
+
+                    <strong>
+                        →
+                    </strong>
+
+                </a>
+
+
+            </div>
 
 
             <!-- =================================================
@@ -315,47 +325,43 @@
          JAVASCRIPT
     ================================================== -->
 
-   
-<script>
-    // Recupera os dados salvos durante a inscrição
-    const valorSalvo =
-        localStorage.getItem("valorInscricao") || "R$ 89,90";
+    <script>
 
-    const nome =
-        localStorage.getItem("nomeInscricao") || "";
+        /*
+         * Recupera o valor salvo durante a inscrição.
+         */
 
-    const percurso =
-        localStorage.getItem("percursoInscricao") || "";
+        const valorInscricao =
+            document.getElementById("valorInscricao");
 
-    const telefone =
-        localStorage.getItem("telefoneInscricao") || "";
+        const valorSalvo =
+            localStorage.getItem("valorInscricao");
 
-    // Exibe o valor da inscrição
-    document.getElementById("valorInscricao").textContent =
-        valorSalvo;
 
-    // Monta a mensagem para o WhatsApp
-    const mensagem = [
-        "Olá! Acabei de realizar minha inscrição na RUN & SAMBA — 2ª EDIÇÃO.",
-        "",
-        nome ? `Participante: ${nome}` : "",
-        percurso ? `Percurso: ${percurso}` : "",        
-        telefone ? `Telefone: ${telefone}` : "",
-        "",
-        "Gostaria de finalizar o pagamento.",
-        "",    
-    ].filter(Boolean).join("\n");
+        if (valorSalvo) {
 
-    const numeroWhatsApp = "5562992104211";
+            valorInscricao.textContent =
+                valorSalvo;
 
-    const linkWhatsApp =
-        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+        }
 
-    // Configura o botão
-    document.getElementById("btnPagamento").href =
-        linkWhatsApp;
-</script>
 
+        /*
+         * Link de pagamento.
+         *
+         * Substitua o endereço abaixo pelo seu
+         * link oficial de pagamento da Izy.
+         */
+
+        const btnPagamento =
+            document.getElementById("btnPagamento");
+
+
+        btnPagamento.href =
+            "https://eventos.izypass.com.br/share/run-and-samba-2-edicao_luziania_20-11-2026";
+
+
+    </script>
 
 
 </body>
